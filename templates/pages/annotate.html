@@ -32,56 +32,150 @@
 
                     <main>
                         <aside class="annotation-editor">
-                            <div class="toolbar">
-                                <!--paper-icon-button id="clear-all" icon="icons:refresh"></paper-icon-button-->
-                                <paper-icon-button class="annotation-action authority" data-i18n="[title]annotations.person" title="Person" data-type="person" data-shortcut="⌘+⇧+p,ctrl+⇧+p" icon="social:person" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button class="annotation-action authority" data-i18n="[title]annotations.organisation" title="organization" data-type="organization" data-shortcut="⌘+⇧+o,ctrl+⇧+o" icon="social:people" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button class="annotation-action authority" data-i18n="[title]annotations.place" title="Place" data-type="place" icon="maps:place" data-shortcut="⌘+⇧+q,ctrl+⇧+q" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button class="annotation-action authority" data-i18n="[title]annotations.term" title="Term" data-type="term" icon="icons:bookmark" data-shortcut="⌘+⇧+t,ctrl+⇧+t" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.date" title="Date" data-type="date" icon="icons:today" data-shortcut="⌘+⇧+d,ctrl+⇧+d" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.ref" title="Reference" data-type="link" icon="icons:link" data-shortcut="⌘+⇧+l,ctrl+⇧+l" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.abbreviation" title="Abbreviation" data-type="abbreviation" icon="icons:translate" data-shortcut="⌘+⇧+b,ctrl+⇧+b" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button class="annotation-action" title="Sic" data-type="sic" icon="editor:strikethrough-s" data-shortcut="⌘+⇧+e,ctrl+⇧+e" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.reg" title="Regularization" data-type="reg" icon="editor:wrap-text" data-shortcut="⌘+⇧+g,ctrl+⇧+g" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.app" title="Apparatus" data-type="app" icon="icons:visibility" data-shortcut="⌘+⇧+v,ctrl+⇧+v" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.hi" title="Highlight" data-type="hi" icon="editor:format-bold" data-shortcut="⌘+⇧+h,ctrl+⇧+h" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.modify" title="Edit" data-type="edit" icon="editor:mode-edit" data-shortcut="⌘+⇧+m,ctrl+⇧+m" disabled="disabled"></paper-icon-button>
-                                <paper-icon-button id="ner-action" icon="social:group-add" data-i18n="[title]annotations.ner.title"></paper-icon-button>
+                            <button id="toggle-toolbar" style="margin-bottom: 1em;">Switch between Layout and Content</button>
+                            <div class="toolbar" id="toolbar-layout">
+                            <div style="margin-left: 1em">
+                                    <span style="font-weight: bold">Layout</span> <span style="font-size:10pt"> (immer von außen nach innen taggen, danach abspeichern)</span>
+                                </div>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.handShift" title="handShift" data-type="handShift" icon="icons:label-outline" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.head" title="Head" data-type="head" icon="icons:face" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.address" title="Address" data-type="address" icon="icons:home" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.opener" title="Opener" data-type="opener" icon="icons:flight-takeoff" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.salute" title="Salute" data-type="salute" icon="social:mood" data-shortcut="⌘+⇧+s,ctrl+⇧+s" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.dateline" title="Dateline" data-type="dateline" icon="icons:view-day" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.closer" title="Closer" data-type="closer" icon="icons:flight-land" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.signed" title="Signature" data-type="signed" icon="icons:gesture" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.postscript" title="PostScript" data-type="postscript" icon="icons:more-horiz" disabled="disabled"/>
                             </div>
+                            <div class="toolbar" id="toolbar-content" style="display: none;">
+                            <div style="margin-left: 1em">
+                                    <span style="font-weight: bold">Inhalt</span>
+                                    <span style="font-size:10pt"> (immer von außen nach innen taggen)</span>
+                                </div>
+                                <!--paper-icon-button id="clear-all" icon="icons:refresh"></paper-icon-button-->
+                                <paper-icon-button class="annotation-action authority" data-i18n="[title]annotations.person" title="Person" data-type="person" data-shortcut="⌘+⇧+p,ctrl+⇧+p" icon="social:person" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action authority" data-i18n="[title]annotations.organisation" title="organization" data-type="organization" data-shortcut="⌘+⇧+o,ctrl+⇧+o" icon="social:people" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action authority" data-i18n="[title]annotations.place" title="Place" data-type="place" icon="maps:place" data-shortcut="⌘+⇧+q,ctrl+⇧+q" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.date" title="Date" data-type="date" icon="icons:today" data-shortcut="⌘+⇧+d,ctrl+⇧+d" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.ref" title="Reference" data-type="ref" icon="icons:link" data-shortcut="⌘+⇧+l,ctrl+⇧+l" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.abbreviation" title="Abbreviation" data-type="abbreviation" icon="icons:translate" data-shortcut="⌘+⇧+b,ctrl+⇧+b" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" title="Sic" data-type="sic" icon="editor:strikethrough-s" data-shortcut="⌘+⇧+e,ctrl+⇧+e" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.reg" title="Regularization" data-type="reg" icon="editor:wrap-text" data-shortcut="⌘+⇧+g,ctrl+⇧+g" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.app" title="Apparatus" data-type="app" icon="icons:visibility" data-shortcut="⌘+⇧+v,ctrl+⇧+v" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.hi" title="Highlight" data-type="hi" icon="editor:format-bold" data-shortcut="⌘+⇧+h,ctrl+⇧+h" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.modify" title="Edit" data-type="edit" icon="editor:mode-edit" data-shortcut="⌘+⇧+m,ctrl+⇧+m" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action authority" data-i18n="[title]annotations.term" title="Term" data-type="term" icon="icons:bookmark" data-shortcut="⌘+⇧+t,ctrl+⇧+t" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.note" title="Note" data-type="note" icon="icons:note-add" data-shortcut="⌘+⇧+n,ctrl+⇧+n" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.del" title="Deletion" data-type="del" icon="editor:format-strikethrough" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.rs" title="ReferringString" data-type="rs" icon="icons:redo" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.supplied" title="Supplied" data-type="supplied" icon="icons:add-circle-outline" disabled="disabled"/>
+                                <paper-icon-button id="ner-action" icon="social:group-add" data-i18n="[title]annotations.ner.title"/>
+                            </div>
+                            
                             <iron-form id="edit-form">
                                 <form action="">
                                     <div class="annotation-form person organization place term">
                                         <paper-input class="form-ref" name="ref" data-i18n="[label]annotations.reference" label="Reference">
-                                            <paper-icon-button slot="prefix" icon="search" data-i18n="[label]annotations.lookup"></paper-icon-button>
+                                            <paper-icon-button slot="prefix" icon="search" data-i18n="[label]annotations.lookup"/>
                                         </paper-input>
-                                        <div class="authority-info"><pb-i18n key="dialogs.loading">Loading ...</pb-i18n></div>
+                                        <div class="authority-info">
+                                            <pb-i18n key="dialogs.loading">Loading ...</pb-i18n>
+                                        </div>
                                     </div>
                                     <div class="annotation-form date">
-                                        <paper-input name="when" label="when" type="date"></paper-input>
-                                        <paper-input name="from" label="from" type="date"></paper-input>
-                                        <paper-input name="to" label="to" type="date"></paper-input>
+                                        <paper-input name="when" label="when" type="date"/>
+                                        <paper-input name="from" label="from" type="date"/>
+                                        <paper-input name="to" label="to" type="date"/>
                                     </div>
                                     <div class="annotation-form hi">
-                                        <paper-input name="rend" label="rend"></paper-input>
-                                        <paper-input name="rendition" label="rendition"></paper-input>
+                                        <p>Angabe lateinischer Buchstaben mit: latintype</p>
+                                        <paper-input name="rend" label="rend"/>
+                                        <paper-input name="rendition" label="rendition"/>
                                     </div>
-                                    <div class="annotation-form link">
-                                        <paper-input name="target" label="target"></paper-input>
+                                    <div class="annotation-form ref">
+                                        <paper-input name="target" label="target"/>
+                                    </div>
+                                    <div class="annotation-form abbreviation">
+                                        <paper-input name="expan" data-i18n="[label]annotations.expansion" label="Expansion"/>
+                                        <paper-input name="resp" label="resp"/>
+                                    </div>
+                                    <div class="annotation-form rs">
+                                        <p>Indirekte Erwähnung - Mögliche types z.B.: person, place, org</p>
+                                        <paper-input name="type" label="Type"/>
+                                        <paper-input name="key" label="Key"/>
+                                    </div>
+                                    <div class="annotation-form supplied">
+                                        <paper-input name="supplied" label="Supplied"/>
+                                        <paper-input name="reason" label="Reason"/>
+                                        <paper-input name="resp" label="resp"/>
+                                    </div>
+                                    <div class="annotation-form handShift">
+                                        <p>
+                                            <b>Dieses Tag muß in eine Lücke gesetzt werden</b>, da es leer ist. <br/>Scribe: Schreibername (bei Schreiberwechsel). Medium: Beschreibung der Tintenart oder -farbe. <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+                                        <paper-input name="scribe" label="Scribe"/>
+                                        <paper-input name="medium" label="Medium"/>
+                                    </div>
+                                    <div class="annotation-form head">
+                                        <p>
+                                            Head - Überschrift <br/> Diese Änderung wird nur im TEI angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form opener">
+                                        <p>
+                                            Opener - Brieferöffnung. <br/> Diese Änderung wird nur im TEI angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form closer">
+                                        <p>
+                                            Closer - Briefschluss <br/> Diese Änderung wird nur im TEI angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form salute">
+                                        <p>
+                                            Salute - Gruß. <br/> Diese Änderung wird nur im TEI angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form address">
+                                        <p>
+                                            Adresse <br/> Diese Änderung wird nur im TEI angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form signed">
+                                        <p>
+                                            Signed - Unterschrift(en). <br/> Diese Änderung wird nur im TEI angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form postscript">
+                                        <p>
+                                            Postscript - PS. <br/> Diese Änderung wird nur im TEI angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form dateline">
+                                        <p>
+                                            Dateline - Umgibt die Zeilen, die das Datum (und z.B. auch Ort) enthalten. <br/> Diese Änderung wird nur im TEI angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form del">
+                                        <p>
+                                            Deletion - Durchstreichung durch den Original-Autor
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form edit">
+                                        <p>
+                                            <pb-i18n key="annotations.modify-info"/>
+                                        </p>
+                                        <paper-input name="content" data-i18n="[label]annotations.correction" label="Correction"/>
                                     </div>
                                     <pb-repeat class="annotation-form app" initial="1">
                                         <template>
-                                            <paper-input name="wit" label="wit"></paper-input>
-                                            <paper-input name="rdg" label="rdg"></paper-input>
+                                            <paper-input name="wit" label="wit"/>
+                                            <paper-input name="rdg" label="rdg"/>
                                         </template>
                                     </pb-repeat>
-                                    <paper-input class="annotation-form sic" name="corr" data-i18n="[label]annotations.correction" label="Correction"></paper-input>
-                                    <paper-input class="annotation-form abbreviation" name="expan" data-i18n="[label]annotations.expansion" label="Expansion"></paper-input>
-                                    <paper-input class="annotation-form reg" name="reg" data-i18n="[label]annotations.reg" label="Regularization"></paper-input>
-                                    <div class="annotation-form edit">
-                                        <p><pb-i18n key="annotations.modify-info"></pb-i18n></p>
-                                        <paper-input name="content" data-i18n="[label]annotations.correction" label="Correction"></paper-input>
-                                    </div>
-                                    <paper-icon-button id="form-save" icon="icons:save" data-i18n="[label]annotations.apply"></paper-icon-button>
+                                    <paper-input class="annotation-form sic" name="corr" data-i18n="[label]annotations.correction" label="Correction"/>
+                                    <paper-input class="annotation-form note" name="note" data-i18n="[label]annotations.note" initial="1" label="Note"/>
+                                    <paper-input class="annotation-form reg" name="reg" data-i18n="[label]annotations.reg" label="Regularization"/>
+                                    <paper-icon-button id="form-save" icon="icons:save" data-i18n="[label]annotations.apply"/>
                                 </form>
                             </iron-form>
                             <div id="occurrences">

@@ -59,12 +59,53 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
                         <rdg wit="{$properties('wit[' || $n || ']')}">{$properties($prop)}</rdg>
                 }
             </app>
-        case "link" return
+        case "ref" return
             <ref xmlns="http://www.tei-c.org/ns/1.0" target="{$properties?target}">{$content()}</ref>
         case "edit" return
             $properties?content
+        
+        (: FPB Addendum :)
+        case "address" return
+            <address xmlns="http://www.tei-c.org/ns/1.0"><addrLine xmlns="http://www.tei-c.org/ns/1.0">{$content()}</addrLine></address>
+        case "closer" return
+            <closer xmlns="http://www.tei-c.org/ns/1.0">{$content()}</closer>
+        case "dateline" return
+            <dateline xmlns="http://www.tei-c.org/ns/1.0">{$content()}</dateline>
+        case "del" return
+            <del xmlns="http://www.tei-c.org/ns/1.0" rend="strikethrough">
+              {$content()}
+            </del>
+        case "handShift" return
+            <remove_this_tag><handShift xmlns="http://www.tei-c.org/ns/1.0" scribe="{$properties?scribe}" medium="{$properties?medium}"/>{$content()}</remove_this_tag>
+        case "head" return
+            <head xmlns="http://www.tei-c.org/ns/1.0">{$content()}</head>
+        case "note" return
+            <seg xmlns="http://www.tei-c.org/ns/1.0">{$content()}<note type="note">{$properties?note}</note></seg>
+        case "opener" return
+            <opener xmlns="http://www.tei-c.org/ns/1.0">{$content()}</opener>
+        case "postscript" return
+            <postscript xmlns="http://www.tei-c.org/ns/1.0"><p xmlns="http://www.tei-c.org/ns/1.0">{$content()}</p></postscript>
+        case "ref" return
+            <ref xmlns="http://www.tei-c.org/ns/1.0" target="{$properties?target}">{$content()}</ref>
+        case "rs" return
+            <rs xmlns="http://www.tei-c.org/ns/1.0"> 
+                {
+                for $prop in map:keys($properties)[. = ('type', 'key')]
+                return
+                    attribute { $prop } { $properties($prop) },
+                $content()
+            }
+            </rs>
+        case "salute" return
+            <salute xmlns="http://www.tei-c.org/ns/1.0">{$content()}</salute>
+        case "signed" return
+            <signed xmlns="http://www.tei-c.org/ns/1.0">{$content()}</signed> 
+        case "supplied" return
+            <supplied xmlns="http://www.tei-c.org/ns/1.0" reason="{$properties?reason}" resp="{$properties?resp}">{$properties?supplied}</supplied>
+        
         default return
             $content()
+        
 };
 
 (:~

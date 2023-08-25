@@ -462,6 +462,46 @@ window.addEventListener("WebComponentsReady", () => {
 
 	hideForm();
 
+	/// FPB Addendum ///
+		document.getElementById('toggle-toolbar').addEventListener('click', () => {
+			if (document.getElementById('toolbar-layout').style.display == "none") {
+				document.getElementById('toolbar-layout').style.display = "block";
+				document.getElementById('toolbar-content').style.display = "none";
+				view.shadowRoot.getElementById('content').classList.add('view1-layout-name');
+				view.shadowRoot.getElementById('content').classList.remove('view1-content-name');
+				view.shadowRoot.getElementById('marker-layer').classList.add('view1-layout-line');
+				view.shadowRoot.getElementById('marker-layer').classList.remove('view1-content-line');
+				view.refreshMarkers();
+			}
+			else {
+				document.getElementById('toolbar-layout').style.display = "none";
+				document.getElementById('toolbar-content').style.display = "block";
+				view.shadowRoot.getElementById('content').classList.remove('view1-layout-name');
+				view.shadowRoot.getElementById('content').classList.add('view1-content-name');
+				view.shadowRoot.getElementById('marker-layer').classList.add('view1-content-line');
+				view.shadowRoot.getElementById('marker-layer').classList.remove('view1-layout-line');
+				view.refreshMarkers();
+				
+				const element = Array.from(view.shadowRoot.getElementById('marker-layer').children)
+				element.forEach(
+					function (e) {
+						if (e.classList.contains("marker") && (getComputedStyle(e).display != ("none"))){
+							if((parseInt(e.style.marginTop) > 0))
+							{
+								e.style.marginTop = (parseInt(e.style.marginTop) - 5 +"px");
+						 
+							}
+							
+							else if ((parseInt(e.style.marginTop) > 0) && ((parseInt(e.previousSibling.style.marginTop)) > 0) && (getComputedStyle(e).display != ("none"))){
+							e.style.marginTop = (parseInt(e.style.marginTop) - 5 +"px"); 
+							} 
+						}
+					})
+			}
+			
+		});
+	/// END FPB Addendum ///	
+
 	// apply annotation action
 	saveBtn.addEventListener("click", () => save());
 	document.getElementById('ner-action').addEventListener('click', () => {

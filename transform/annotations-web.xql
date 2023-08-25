@@ -105,20 +105,21 @@ declare function model:apply($config as map(*), $input as node()*) {
                             html:block($config, ., ("tei-figure1", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                         else
                             html:inline($config, ., ("tei-figure2", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
+                    (: FPB change html:block > html:inline and css :)
                     case element(supplied) return
                         if (parent::choice) then
-                            html:inline($config, ., ("tei-supplied1", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
+                            html:inline($config, ., ("tei-supplied1", "annotation", "annotation-supplied", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                         else
                             if (@reason='damage') then
-                                html:inline($config, ., ("tei-supplied2", css:map-rend-to-class(.)), .)                                => model:map($node, $trackIds)
+                                html:inline($config, ., ("tei-supplied2", "annotation", "annotation-supplied", css:map-rend-to-class(.)), .)                                => model:map($node, $trackIds)
                             else
                                 if (@reason='illegible' or not(@reason)) then
-                                    html:inline($config, ., ("tei-supplied3", css:map-rend-to-class(.)), .)                                    => model:map($node, $trackIds)
+                                    html:inline($config, ., ("tei-supplied3", "annotation", "annotation-supplied", css:map-rend-to-class(.)), .)                                    => model:map($node, $trackIds)
                                 else
                                     if (@reason='omitted') then
-                                        html:inline($config, ., ("tei-supplied4", css:map-rend-to-class(.)), .)                                        => model:map($node, $trackIds)
+                                        html:inline($config, ., ("tei-supplied4", "annotation", "annotation-supplied", css:map-rend-to-class(.)), .)                                        => model:map($node, $trackIds)
                                     else
-                                        html:inline($config, ., ("tei-supplied5", css:map-rend-to-class(.)), .)                                        => model:map($node, $trackIds)
+                                        html:inline($config, ., ("tei-supplied5", "annotation", "annotation-supplied", css:map-rend-to-class(.)), .)                                        => model:map($node, $trackIds)
                     case element(g) return
                         if (not(text())) then
                             html:glyph($config, ., ("tei-g1", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
@@ -150,13 +151,15 @@ declare function model:apply($config as map(*), $input as node()*) {
                                                         html:pass-through(map:merge(($config, map:entry("template", true()))), ., ("tei-ptr", css:map-rend-to-class(.)), $content)                            => model:map($node, $trackIds)
                         else
                             $config?apply($config, ./node())
+                    (: FPB change html:block > html:inline and css :)
                     case element(closer) return
-                        html:block($config, ., ("tei-closer", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                        html:inline($config, ., ("tei-closer", "annotation", "annotation-closer", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                    (: FPB change html:block > html:inline and css :)
                     case element(signed) return
                         if (parent::closer) then
-                            html:block($config, ., ("tei-signed1", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
+                            html:inline($config, ., ("tei-signed1", "annotation", "annotation-signed", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                         else
-                            html:inline($config, ., ("tei-signed2", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
+                            html:inline($config, ., ("tei-signed2", "annotation", "annotation-signed", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                     case element(p) return
                         html:paragraph($config, ., css:get-rendition(., ("tei-p2", css:map-rend-to-class(.))), .)                        => model:map($node, $trackIds)
                     case element(list) return
@@ -250,13 +253,16 @@ declare function model:apply($config as map(*), $input as node()*) {
                         if (@type='annotation') then
                             html:omit($config, ., ("tei-note1", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                         else
+                            (: More than one model without predicate found for ident note. Choosing first one. :)
                             html:note($config, ., ("tei-note2", css:map-rend-to-class(.)), ., @place, @n)                            => model:map($node, $trackIds)
                     case element(code) return
                         html:inline($config, ., ("tei-code", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                    (: FPB change html:block > html:inline and css :)
                     case element(postscript) return
-                        html:block($config, ., ("tei-postscript", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                        html:inline($config, ., ("tei-postscript", "annotation", "annotation-postscript", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                    (: FPB change html:block > html:inline and css :)
                     case element(dateline) return
-                        html:block($config, ., ("tei-dateline", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                        html:inline($config, ., ("tei-dateline", "annotation", "annotation-dateline", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
                     case element(back) return
                         html:block($config, ., ("tei-back", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
                     case element(edition) return
@@ -264,8 +270,9 @@ declare function model:apply($config as map(*), $input as node()*) {
                             html:block($config, ., ("tei-edition", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                         else
                             $config?apply($config, ./node())
+                    (: FPB change css :)
                     case element(del) return
-                        html:inline($config, ., ("tei-del", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                        html:inline($config, ., ("tei-del", "annotation", "annotation-del", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
                     case element(cell) return
                         (: Insert table cell. :)
                         html:cell($config, ., ("tei-cell", css:map-rend-to-class(.)), ., ())                        => model:map($node, $trackIds)
@@ -307,14 +314,22 @@ declare function model:apply($config as map(*), $input as node()*) {
                                         if (parent::list) then
                                             html:block($config, ., ("tei-head5", css:map-rend-to-class(.)), .)                                            => model:map($node, $trackIds)
                                         else
+                                            (: FPB css added:)
                                             if (parent::div) then
-                                                html:heading($config, ., ("tei-head6", css:map-rend-to-class(.)), ., count(ancestor::div))                                                => model:map($node, $trackIds)
+                                                html:heading($config, ., ("tei-head6", "annotation", "annotation-head", css:map-rend-to-class(.)), ., count(ancestor::div))                                                => model:map($node, $trackIds)
                                             else
                                                 html:block($config, ., ("tei-head7", css:map-rend-to-class(.)), .)                                                => model:map($node, $trackIds)
                     case element(roleDesc) return
                         html:block($config, ., ("tei-roleDesc", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                    (: FPB address added:)
+                    case element(address) return
+                        html:inline($config, ., ("tei-address", "annotation", "annotation-address", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                    (: FPB change html:block > html:inline and css :)
                     case element(opener) return
-                        html:block($config, ., ("tei-opener", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                        html:inline($config, ., ("tei-opener", "annotation", "annotation-opener", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                    (: FPB added handShift:)
+                    case element(handShift) return
+                        html:inline($config, ., ("tei-handShift", "annotation", "annotation-handShift", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
                     case element(speaker) return
                         html:block($config, ., ("tei-speaker", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
                     case element(time) return
@@ -334,11 +349,12 @@ declare function model:apply($config as map(*), $input as node()*) {
                             html:inline($config, ., ("tei-bibl2", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                     case element(unclear) return
                         html:inline($config, ., ("tei-unclear", css:map-rend-to-class(.)), .)                        => model:map($node, $trackIds)
+                    (: FPB change html:block > html:inline and css :)
                     case element(salute) return
                         if (parent::closer) then
-                            html:inline($config, ., ("tei-salute1", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
+                            html:inline($config, ., ("tei-salute1", "annotation", "annotation-salute", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                         else
-                            html:block($config, ., ("tei-salute2", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
+                            html:inline($config, ., ("tei-salute2", "annotation", "annotation-salute", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                     case element(title) return
                         if ($parameters?header='short') then
                             html:heading($config, ., ("tei-title1", css:map-rend-to-class(.)), ., 5)                            => model:map($node, $trackIds)
@@ -515,12 +531,12 @@ declare function model:apply($config as map(*), $input as node()*) {
                             html:paragraph($config, ., ("tei-place3", css:map-rend-to-class(.)), string-join((country, region), ', '))                            => model:map($node, $trackIds),
                             html:block($config, ., ("tei-place4", css:map-rend-to-class(.)), note/node())                            => model:map($node, $trackIds)
                         )
-
+                    (: FPB Addendum else > css:)
                     case element(rs) return
                         if (@type='abbreviation') then
                             html:inline($config, ., ("tei-rs1", "annotation", "annotation-abbreviation", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                         else
-                            html:inline($config, ., ("tei-rs2", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
+                            html:inline($config, ., ("tei-rs2", "annotation", "annotation-rs", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                     case element(person) return
                         (
                             html:heading($config, ., ("tei-person1", css:map-rend-to-class(.)), persName[@type="full"], 3)                            => model:map($node, $trackIds),
