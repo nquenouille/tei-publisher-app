@@ -148,7 +148,7 @@
                     <model behaviour="inline" cssClass="annotation annotation-ref"/>
                 </elementSpec>
 
-                <!-- FPB Addendum -->
+                <!-- FPB Addendum (should be in annotations.odd of BACH!)-->
                 <elementSpec ident="head" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-head"/>
                 </elementSpec>
