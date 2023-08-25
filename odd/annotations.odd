@@ -147,6 +147,50 @@
                 <elementSpec ident="ref" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-ref"/>
                 </elementSpec>
+
+                <!-- FPB Addendum -->
+                <elementSpec ident="head" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-head"/>
+                </elementSpec>
+                <elementSpec ident="salute" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-salute"/>
+                </elementSpec>
+                <elementSpec ident="address" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-address"/>
+                </elementSpec>
+                <elementSpec ident="postscript" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-postscript"/>
+                </elementSpec>
+                <elementSpec ident="signed" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-signed"/>
+                </elementSpec>
+                <elementSpec ident="dateline" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-dateline"/>
+                </elementSpec>
+                <elementSpec ident="opener" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-opener"/>
+                </elementSpec>
+                <elementSpec ident="closer" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-closer"/>
+                </elementSpec>
+                <elementSpec ident="date" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-date"/>
+                </elementSpec>
+                <elementSpec ident="note" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-note"/>
+                </elementSpec>
+                <elementSpec ident="handShift" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-handShift"/>
+                </elementSpec>
+                <elementSpec ident="del" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-del" useSourceRendition="true"/>
+                </elementSpec>
+                <elementSpec ident="rs" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-rs" useSourceRendition="true"/>
+                </elementSpec>
+                <elementSpec ident="supplied" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-supplied" useSourceRendition="true"/>
+                </elementSpec>
             </schemaSpec>
         </body>
     </text>
