@@ -329,7 +329,7 @@ window.addEventListener("WebComponentsReady", () => {
 						const iframe = document.getElementById("html");
 						iframe.srcdoc = html.replaceAll(/<img[^>]*>/g, "");
 						const iframe2 = document.getElementById("html2");
-						iframe2.srcdoc = html.replaceAll(/<img[^>]*>/g, "").replaceAll(/<br[^>]*>/g, '').replaceAll(/\s\s+/g, ' ').replaceAll(/¬ /g, '').replaceAll(/<section([^>]*)>/g, "<section\1><p>").replaceAll("</section>", "</p></section>");
+						iframe2.srcdoc = html.replaceAll(/<img[^>]*>/g, "").replaceAll(/<br[^>]*>/g, ' ').replaceAll(/\s\s+/g, ' ').replaceAll(/¬ /g, '');
 					});
 			});
 		});
