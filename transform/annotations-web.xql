@@ -482,7 +482,10 @@ declare function model:apply($config as map(*), $input as node()*) {
                             else
                                 html:inline($config, ., ("tei-gap3", css:map-rend-to-class(.)), .)                                => model:map($node, $trackIds)
                     case element(seg) return
-                        html:inline($config, ., css:get-rendition(., ("tei-seg", css:map-rend-to-class(.))), .)                        => model:map($node, $trackIds)
+                        if (@type="todo") then
+                            html:inline($config, ., css:get-rendition(., ("tei-seg", "annotation", "annotation-seg", css:map-rend-to-class(.))), .)                        => model:map($node, $trackIds)
+                        else
+                            html:inline($config, ., css:get-rendition(., ("tei-seg", css:map-rend-to-class(.))), .)                        => model:map($node, $trackIds)
                     case element(notatedMusic) return
                         html:figure($config, ., ("tei-notatedMusic", css:map-rend-to-class(.)), ptr, label)                        => model:map($node, $trackIds)
                     case element(profileDesc) return

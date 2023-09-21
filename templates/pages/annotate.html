@@ -70,6 +70,7 @@
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.del" title="Deletion" data-type="del" icon="editor:format-strikethrough" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.rs" title="ReferringString" data-type="rs" icon="icons:redo" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.supplied" title="Supplied" data-type="supplied" icon="icons:add-circle-outline" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.seg" title="Seg" data-type="seg" icon="icons:explore" disabled="disabled"/>
                                 <paper-icon-button id="ner-action" icon="social:group-add" data-i18n="[title]annotations.ner.title"/>
                             </div>
                             
@@ -157,6 +158,11 @@
                                     <div class="annotation-form floatingText">
                                         <p>
                                             Der Zeilenfall wird in der Leseansicht beibehalten. <b>Nicht in einen Opener oder Closer setzen.</b> <br/> Diese Änderung wird nur im TEI angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form seg">
+                                        <p>
+                                            Dieses Element kann für unsicheres Tagging eingesetzt werden, wenn es später durch einen anderen Tag ausgetauscht werden soll. Diese Änderung wird nur im TEI angezeigt.
                                         </p>
                                     </div>
                                     <div class="annotation-form del">
