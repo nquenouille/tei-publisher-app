@@ -191,6 +191,12 @@
                 <elementSpec ident="supplied" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-supplied" useSourceRendition="true"/>
                 </elementSpec>
+                <elementSpec ident="latintype" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-latintype"/>
+                </elementSpec>
+                <elementSpec ident="preserveLb" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-preserveLb"/>
+                </elementSpec>
             </schemaSpec>
         </body>
     </text>

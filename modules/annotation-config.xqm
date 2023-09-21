@@ -79,6 +79,10 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             <remove_this_tag><handShift xmlns="http://www.tei-c.org/ns/1.0" scribe="{$properties?scribe}" medium="{$properties?medium}"/>{$content()}</remove_this_tag>
         case "head" return
             <head xmlns="http://www.tei-c.org/ns/1.0">{$content()}</head>
+        case "latintype" return
+            <hi xmlns="http://www.tei-c.org/ns/1.0" rend="latintype">
+              {$content()}
+            </hi>
         case "note" return
             <seg xmlns="http://www.tei-c.org/ns/1.0">{$content()}<note type="note">{$properties?note}</note></seg>
         case "opener" return
@@ -96,6 +100,8 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
                 $content()
             }
             </rs>
+        case "preserveLb" return
+            <s xmlns="http://www.tei-c.org/ns/1.0">{$content()}</s>
         case "salute" return
             <salute xmlns="http://www.tei-c.org/ns/1.0">{$content()}</salute>
         case "signed" return
