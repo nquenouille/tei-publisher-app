@@ -101,7 +101,7 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
         case "signed" return
             <signed xmlns="http://www.tei-c.org/ns/1.0">{$content()}</signed> 
         case "supplied" return
-            <supplied xmlns="http://www.tei-c.org/ns/1.0" reason="{$properties?reason}" resp="{$properties?resp}">{$properties?supplied}</supplied>
+            <supplied xmlns="http://www.tei-c.org/ns/1.0" reason="{$properties?reason}">{$properties?supplied}</supplied>
         
         default return
             $content()
