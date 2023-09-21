@@ -194,8 +194,8 @@
                 <elementSpec ident="latintype" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-latintype"/>
                 </elementSpec>
-                <elementSpec ident="preserveLb" mode="change">
-                    <model behaviour="inline" cssClass="annotation annotation-preserveLb"/>
+                <elementSpec ident="floatingText" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-floatingText"/>
                 </elementSpec>
             </schemaSpec>
         </body>

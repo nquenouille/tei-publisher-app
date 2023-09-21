@@ -537,8 +537,8 @@ declare function model:apply($config as map(*), $input as node()*) {
                             html:inline($config, ., ("tei-rs1", "annotation", "annotation-abbreviation", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
                         else
                             html:inline($config, ., ("tei-rs2", "annotation", "annotation-rs", css:map-rend-to-class(.)), .)                            => model:map($node, $trackIds)
-                    case element(s) return
-                        html:inline($config, ., css:get-rendition(., ("tei-s", "annotation", "annotation-preserveLb", css:map-rend-to-class(.))), .)                        => model:map($node, $trackIds)
+                    case element(floatingText) return
+                        html:inline($config, ., css:get-rendition(., ("tei-floatingText", "annotation", "annotation-floatingText", css:map-rend-to-class(.))), .)                        => model:map($node, $trackIds)
                     case element(person) return
                         (
                             html:heading($config, ., ("tei-person1", css:map-rend-to-class(.)), persName[@type="full"], 3)                            => model:map($node, $trackIds),

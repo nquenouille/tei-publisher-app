@@ -147,5 +147,5 @@
 .view1-content-name .annotation.annotation-signed::after {display:none !important}
 .view1-content-line .annotation-dateline {display:none !important}
 .view1-content-name .annotation.annotation-dateline::after {display:none !important}
-.view1-content-line .annotation-preserveLb {display:none !important}
-.view1-content-name .annotation.annotation-preserveLb::after {display:none !important}
+.view1-content-line .annotation-floatingText {display:none !important}
+.view1-content-name .annotation.annotation-floatingText::after {display:none !important}
