@@ -33,7 +33,9 @@
             </sourceDesc>
         </fileDesc>
         <encodingDesc>
-            <tagsDecl/>
+            <tagsDecl>
+                <rendition source="annotations_customization.css"/>
+            </tagsDecl>
         </encodingDesc>
         <revisionDesc>
             <change when="2021-05-28+02:00">Initial version</change>
