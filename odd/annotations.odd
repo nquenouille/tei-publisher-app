@@ -200,7 +200,7 @@
                     <model behaviour="inline" cssClass="annotation annotation-floatingText"/>
                 </elementSpec>
                 <elementSpec ident="seg" mode="change">
-                    <model behaviour="inline" cssClass="annotation annotation-seg"/>
+                    <model behaviour="inline" predicate="@type='todo'" cssClass="annotation annotation-seg"/>
                 </elementSpec>
             </schemaSpec>
         </body>
