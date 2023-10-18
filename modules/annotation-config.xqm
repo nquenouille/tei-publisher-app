@@ -78,7 +78,7 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
         case "floatingText" return
             <floatingText xmlns="http://www.tei-c.org/ns/1.0"><body><p>{$content()}</p></body></floatingText>
         case "handShift" return
-            <remove_this_tag><handShift xmlns="http://www.tei-c.org/ns/1.0" scribe="{$properties?scribe}" medium="{$properties?medium}"/>{$content()}</remove_this_tag>
+            (<handShift xmlns="http://www.tei-c.org/ns/1.0" scribe="{$properties?scribe}"/>, $content())
         case "head" return
             <head xmlns="http://www.tei-c.org/ns/1.0">{$content()}</head>
         case "latintype" return
