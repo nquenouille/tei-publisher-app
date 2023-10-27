@@ -309,6 +309,26 @@ window.addEventListener("WebComponentsReady", () => {
 					});
 				}
 				resolve(json.content);
+
+				/* Show facsimile in tab */
+				var xml = document.getElementById("output").code
+				parser = new DOMParser();
+                xmlDoc = parser.parseFromString(xml,"text/xml");
+                var allGraphics = xmlDoc.getElementsByTagName("graphic")
+                var max = allGraphics.length;
+                for(var i = 0; i<max; i++){
+                    if(xmlDoc.getElementsByTagName("graphic")[i]){
+                    if(xmlDoc.getElementsByTagName("graphic")[i].getAttribute("mimeType") == "image/jpg"){
+                        const el = document.createElement("pb-facs-link");
+                        var url = xmlDoc.getElementsByTagName("graphic")[i].getAttribute("url");
+                        el.setAttribute("facs", url);
+                        var par = document.getElementById("facsimile");
+                        par.appendChild(el);
+                        }
+                    }
+                }
+				/* *******end of FPB change ****** */
+
 				fetch(
 					`${endpoint}/api/preview?odd=${doc.odd}.odd&base=${encodeURIComponent(
 						endpoint
@@ -331,6 +351,7 @@ window.addEventListener("WebComponentsReady", () => {
 						const iframe2 = document.getElementById("html2");
 						iframe2.srcdoc = html.replaceAll(/<img[^>]*>/g, "").replaceAll(/<br[^>]*>/g, ' ').replaceAll(/\s\s+/g, ' ').replaceAll(/¬ /g, '');
 					});
+					/* *********end of FPB change********* */
 			});
 		});
 	}
