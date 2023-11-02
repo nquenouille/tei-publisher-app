@@ -314,18 +314,19 @@ window.addEventListener("WebComponentsReady", () => {
 				var xml = document.getElementById("output").code
 				parser = new DOMParser();
                 xmlDoc = parser.parseFromString(xml,"text/xml");
-                var allGraphics = xmlDoc.getElementsByTagName("graphic")
-                var max = allGraphics.length;
-                for(var i = 0; i<max; i++){
-                    if(xmlDoc.getElementsByTagName("graphic")[i]){
-                    if(xmlDoc.getElementsByTagName("graphic")[i].getAttribute("mimeType") == "image/jpg"){
-                        const el = document.createElement("pb-facs-link");
-                        var url = xmlDoc.getElementsByTagName("graphic")[i].getAttribute("url");
-                        el.setAttribute("facs", url);
-                        var par = document.getElementById("facsimile");
-                        par.appendChild(el);
+                var par = document.getElementById("facsimile");
+                if(!par.hasChildNodes("pb-facs-link")){
+                    var allGraphics = Array.from(xmlDoc.getElementsByTagName("graphic")).forEach(function (e, i) {
+                        if(e){
+                        if(e.getAttribute("mimeType") == "image/jpg"){
+                            const el = document.createElement("pb-facs-link");
+                            var url = e.getAttribute("url");
+                            el.setAttribute("facs", url);
+                            el.setAttribute("order", i);
+                            par.appendChild(el);
+                            }
                         }
-                    }
+                    });
                 }
 				/* *******end of FPB change ****** */
 
