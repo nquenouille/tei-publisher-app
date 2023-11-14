@@ -3,6 +3,8 @@
 /* When layout toggled, do not display the content annotations */
 .view1-layout-line .annotation-abbr {display:none !important;}
 .view1-layout-name .annotation.annotation-abbr::after {display:none !important;}
+.view1-layout-line .annotation-add {display:none !important;}
+.view1-layout-name .annotation.annotation-add::after {display:none !important;}
 .view1-layout-line .annotation-sic {display:none !important;}
 .view1-layout-name .annotation.annotation-sic::after {display:none !important;}
 .view1-layout-line .annotation-person {display:none !important;}
@@ -31,6 +33,8 @@
 .view1-layout-name .annotation.annotation-rs::after {display:none !important;}
 .view1-layout-line .annotation-supplied {display:none !important;}
 .view1-layout-name .annotation.annotation-supplied::after {display:none !important;}
+.view1-layout-line .annotation-emph {display:none !important;}
+.view1-layout-name .annotation.annotation-emph::after {display:none !important;}
 
 /* When content toggled, do not display the layout annotations */
 .view1-content-line .annotation-closer {display:none !important}

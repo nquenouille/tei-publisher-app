@@ -64,11 +64,14 @@
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.reg" title="Regularization" data-type="reg" icon="editor:wrap-text" data-shortcut="⌘+⇧+g,ctrl+⇧+g" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.app" title="Apparatus" data-type="app" icon="icons:visibility" data-shortcut="⌘+⇧+v,ctrl+⇧+v" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.hi" title="Highlight" data-type="hi" icon="editor:format-bold" data-shortcut="⌘+⇧+h,ctrl+⇧+h" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.latintype" title="Latintype" data-type="latintype" icon="editor:format-italic" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.emph" title="emph" data-type="emph" icon="icons:view-week" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.modify" title="Edit" data-type="edit" icon="editor:mode-edit" data-shortcut="⌘+⇧+m,ctrl+⇧+m" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action authority" data-i18n="[title]annotations.term" title="Term" data-type="term" icon="icons:bookmark" data-shortcut="⌘+⇧+t,ctrl+⇧+t" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.note" title="Note" data-type="note" icon="icons:note-add" data-shortcut="⌘+⇧+n,ctrl+⇧+n" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.del" title="Deletion" data-type="del" icon="editor:format-strikethrough" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.rs" title="ReferringString" data-type="rs" icon="icons:redo" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.add" title="Add" data-type="add" icon="icons:add-circle" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.supplied" title="Supplied" data-type="supplied" icon="icons:add-circle-outline" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.seg" title="Seg" data-type="seg" icon="icons:explore" disabled="disabled"/>
                                 <paper-icon-button id="ner-action" icon="social:group-add" data-i18n="[title]annotations.ner.title"/>
@@ -94,6 +97,14 @@
                                         <paper-input name="rend" label="rend"/>
                                         <paper-input name="rendition" label="rendition"/>
                                     </div>
+                                    <div class="annotation-form latintype">
+                                        <p>
+                                            Latintype - Text wird kursiv angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form emph">
+                                        <p>Wort wird gesperrt dargestellt.</p>
+                                    </div>
                                     <div class="annotation-form ref">
                                         <paper-input name="target" label="target"/>
                                     </div>
@@ -105,7 +116,14 @@
                                         <paper-input name="type" label="Type"/>
                                         <paper-input name="key" label="Key"/>
                                     </div>
+                                    <div class="annotation-form add">
+                                        <p>Originale Ergänzung. <br/> Attribut <i>hand</i> entweder mit "Autor" oder Namen des Ergänzenden füllen. <br/> <i>type</i> bei Bedarf mit "correction" benennen, falls die Ergänzung auf eine Durchstreichung folgt. <br /> <i>place</i>: margin-left, margin-right, below, bottom, above, top möglich. </p>
+                                        <paper-input name="hand" label="Hand"/>
+                                        <paper-input name="type" label="Type"/>
+                                        <paper-input name="place" label="Place"/>
+                                    </div>
                                     <div class="annotation-form supplied">
+                                        <p>Ergänzung durch den Herausgeber!</p>
                                         <paper-input name="supplied" label="Supplied"/>
                                         <paper-input name="reason" label="Reason"/>
                                     </div>

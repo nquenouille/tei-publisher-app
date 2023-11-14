@@ -85,6 +85,10 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             <hi xmlns="http://www.tei-c.org/ns/1.0" rend="latintype">
               {$content()}
             </hi>
+        case "emph" return
+            <emph xmlns="http://www.tei-c.org/ns/1.0" rend="letter-spacing">
+              {$content()}
+            </emph>
         case "note" return
             <seg xmlns="http://www.tei-c.org/ns/1.0">{$content()}<note type="note">{$properties?note}</note></seg>
         case "opener" return
@@ -108,9 +112,10 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             <seg xmlns="http://www.tei-c.org/ns/1.0" type="todo">{$content()}</seg>
         case "signed" return
             <signed xmlns="http://www.tei-c.org/ns/1.0">{$content()}</signed> 
+        case "add" return
+            <add xmlns="http://www.tei-c.org/ns/1.0" hand="{$properties?hand}" type="{$properties?type}" place="{$properties?place}">{$content()}</add>
         case "supplied" return
-            <supplied xmlns="http://www.tei-c.org/ns/1.0" reason="{$properties?reason}">{$properties?supplied}</supplied>
-        
+            ($content(), <supplied xmlns="http://www.tei-c.org/ns/1.0" reason="{$properties?reason}">{$properties?supplied}</supplied>)
         default return
             $content()
         

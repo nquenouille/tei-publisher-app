@@ -190,11 +190,20 @@
                 <elementSpec ident="rs" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-rs" useSourceRendition="true"/>
                 </elementSpec>
+                <elementSpec ident="add" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-add" useSourceRendition="true"/>
+                </elementSpec>
+                <elementSpec ident="add" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-add" useSourceRendition="true"/>
+                </elementSpec>
                 <elementSpec ident="supplied" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-supplied" useSourceRendition="true"/>
                 </elementSpec>
                 <elementSpec ident="latintype" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-latintype"/>
+                </elementSpec>
+                <elementSpec ident="emph" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-emph"/>
                 </elementSpec>
                 <elementSpec ident="floatingText" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-floatingText"/>
