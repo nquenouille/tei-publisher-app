@@ -23,13 +23,8 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
         case "organization" return
             <orgName xmlns="http://www.tei-c.org/ns/1.0" ref="{$properties?ref}">{$content()}</orgName>
         case "hi" return
-            <hi xmlns="http://www.tei-c.org/ns/1.0">
-            { 
-                if ($properties?rend) then attribute rend { $properties?rend } else (),
-                if ($properties?rendition) then attribute rendition { $properties?rendition } else (),
-                $content()
-            }
-            </hi>
+            case "hi" return
+            <hi xmlns="http://www.tei-c.org/ns/1.0" rend="{$properties?rend}">{$content()}</hi>
         case "abbreviation" return
             <choice xmlns="http://www.tei-c.org/ns/1.0"><abbr>{$content()}</abbr><expan>{$properties?expan}</expan></choice>
         case "sic" return
@@ -42,7 +37,7 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
         case "date" return
             <date xmlns="http://www.tei-c.org/ns/1.0">
             {
-                for $prop in map:keys($properties)[. = ('when', 'from', 'to')]
+                for $prop in map:keys($properties)[. = ('when', 'from', 'to', 'notBefore', 'notAfter')]
                 return
                     attribute { $prop } { $properties($prop) },
                 $content()
@@ -85,12 +80,26 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             <hi xmlns="http://www.tei-c.org/ns/1.0" rend="latintype">
               {$content()}
             </hi>
+        case "underline" return
+            <hi xmlns="http://www.tei-c.org/ns/1.0" rend="underline">
+              {$content()}
+            </hi>
+        case "semibold" return
+            <hi xmlns="http://www.tei-c.org/ns/1.0" rend="semibold">
+              {$content()}
+            </hi>
+        case "superscript" return
+            <hi xmlns="http://www.tei-c.org/ns/1.0" rend="super">
+              {$content()}
+            </hi>
         case "emph" return
             <emph xmlns="http://www.tei-c.org/ns/1.0" rend="letter-spacing">
               {$content()}
             </emph>
         case "note" return
             <seg xmlns="http://www.tei-c.org/ns/1.0">{$content()}<note type="note">{$properties?note}</note></seg>
+        case "num" return
+            <num xmlns="http://www.tei-c.org/ns/1.0">{$content()}<note xmlns="http://www.tei-c.org/ns/1.0">{$properties?note}</note></num>
         case "opener" return
             <opener xmlns="http://www.tei-c.org/ns/1.0">{$content()}</opener>
         case "postscript" return

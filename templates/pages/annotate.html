@@ -63,7 +63,10 @@
                                 <paper-icon-button class="annotation-action" title="Sic" data-type="sic" icon="editor:strikethrough-s" data-shortcut="⌘+⇧+e,ctrl+⇧+e" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.reg" title="Regularization" data-type="reg" icon="editor:wrap-text" data-shortcut="⌘+⇧+g,ctrl+⇧+g" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.app" title="Apparatus" data-type="app" icon="icons:visibility" data-shortcut="⌘+⇧+v,ctrl+⇧+v" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.hi" title="Highlight" data-type="hi" icon="editor:format-bold" data-shortcut="⌘+⇧+h,ctrl+⇧+h" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.hi" title="Highlight" data-type="hi" icon="image:wb-sunny" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.semibold" title="Semibold" data-type="semibold" icon="editor:format-bold" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.underline" title="Underline" data-type="underline" icon="editor:format-underlined" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.superscript" title="Superscript" data-type="superscript" icon="maps:terrain" isabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.latintype" title="Latintype" data-type="latintype" icon="editor:format-italic" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.emph" title="emph" data-type="emph" icon="icons:view-week" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.modify" title="Edit" data-type="edit" icon="editor:mode-edit" data-shortcut="⌘+⇧+m,ctrl+⇧+m" disabled="disabled"/>
@@ -73,6 +76,7 @@
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.rs" title="ReferringString" data-type="rs" icon="icons:redo" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.add" title="Add" data-type="add" icon="icons:add-circle" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.supplied" title="Supplied" data-type="supplied" icon="icons:add-circle-outline" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.num" title="Number" data-type="num" icon="image:looks-3" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.seg" title="Seg" data-type="seg" icon="icons:explore" disabled="disabled"/>
                                 <paper-icon-button id="ner-action" icon="social:group-add" data-i18n="[title]annotations.ner.title"/>
                             </div>
@@ -91,15 +95,31 @@
                                         <paper-input name="when" label="when" type="date"/>
                                         <paper-input name="from" label="from" type="date"/>
                                         <paper-input name="to" label="to" type="date"/>
+                                        <paper-input name="notBefore" label="notBefore" type="date"/>
+                                        <paper-input name="notAfter" label="notAfter" type="date"/>
                                     </div>
                                     <div class="annotation-form hi">
-                                        <p>Angabe lateinischer Buchstaben mit: latintype</p>
+                                        <p>Für weitere Auszeichnungen gedacht.</p>
                                         <paper-input name="rend" label="rend"/>
-                                        <paper-input name="rendition" label="rendition"/>
                                     </div>
                                     <div class="annotation-form latintype">
                                         <p>
                                             Latintype - Text wird kursiv angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form underline">
+                                        <p>
+                                            Underline - Text wird unterstrichen angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form semibold">
+                                        <p>
+                                            Semibold - Text wird halb-fett angezeigt (von Schriftart des Browsers abhängig).
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form superscript">
+                                        <p>
+                                            Superscript - Text wird hochgestellt angezeigt.
                                         </p>
                                     </div>
                                     <div class="annotation-form emph">
@@ -131,6 +151,17 @@
                                         <p>
                                             <b>Dieses Tag wird direkt vor das markierte Wort gesetzt</b>, da es leer ist. <br/>Scribe: Schreibername (bei Schreiberwechsel). Medium: Beschreibung der Tintenart oder -farbe. <br/> Diese Änderung wird nur im TEI angezeigt.</p>
                                         <paper-input name="scribe" label="Scribe"/>
+                                    </div>
+                                    <div class="annotation-form pb">
+                                        <p>Dieses Tag dient dazu, die originale Seitennumerierung einzufügen. Die Facsimile-ID bitte <b>nicht</b> ändern.</p>
+                                        <paper-input name="n" label="Pagenumber"/>
+                                        <paper-input name="facs" label="Facsimile-ID"/>
+                                    </div>
+                                    <div class="annotation-form num" data-i18n="[label]annotations.num">
+                                        <p>
+                                            Ziffer, hier: im Original vorhandene Seitenzahl.
+                                        </p>
+                                        <paper-input name="note" label="Anmerkung"/>
                                     </div>
                                     <div class="annotation-form head">
                                         <p>

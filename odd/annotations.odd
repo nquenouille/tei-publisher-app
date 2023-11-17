@@ -202,8 +202,23 @@
                 <elementSpec ident="latintype" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-latintype"/>
                 </elementSpec>
+                 <elementSpec ident="semibold" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-semibold"/>
+                </elementSpec>
+                <elementSpec ident="underline" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-underline"/>
+                </elementSpec>
+                <elementSpec ident="superscript" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-superscript"/>
+                </elementSpec>
                 <elementSpec ident="emph" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-emph"/>
+                </elementSpec>
+                <elementSpec ident="pb" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-pb"/>
+                </elementSpec>
+                <elementSpec ident="num" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-num"/>
                 </elementSpec>
                 <elementSpec ident="floatingText" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-floatingText"/>
