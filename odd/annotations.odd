@@ -49,6 +49,7 @@
                     <model behaviour="inline" cssClass="annotation annotation-person authority"/>
                 </elementSpec>
                 <elementSpec ident="pb" mode="change">
+                <model behaviour="inline" cssClass="annotation annotation-pb"/>
                     <model behaviour="inline">
             <outputRendition xml:space="preserve" scope="after">
             content: '|';
@@ -213,9 +214,6 @@
                 </elementSpec>
                 <elementSpec ident="emph" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-emph"/>
-                </elementSpec>
-                <elementSpec ident="pb" mode="change">
-                    <model behaviour="inline" cssClass="annotation annotation-pb"/>
                 </elementSpec>
                 <elementSpec ident="num" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-num"/>

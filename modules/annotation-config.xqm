@@ -26,7 +26,14 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             case "hi" return
             <hi xmlns="http://www.tei-c.org/ns/1.0" rend="{$properties?rend}">{$content()}</hi>
         case "abbreviation" return
-            <choice xmlns="http://www.tei-c.org/ns/1.0"><abbr>{$content()}</abbr><expan>{$properties?expan}</expan></choice>
+            <choice xmlns="http://www.tei-c.org/ns/1.0"><abbr>
+                {
+                for $prop in map:keys($properties)[. = ('type')]
+                return
+                    attribute { $prop } { $properties($prop) },
+                $content()
+            }
+            </abbr><expan>{$properties?expan}</expan></choice>
         case "sic" return
             <choice xmlns="http://www.tei-c.org/ns/1.0"><sic>{$content()}</sic><corr>{$properties?corr}</corr></choice>
         case "reg" return
