@@ -262,6 +262,23 @@
                                     <paper-icon-button id="reload-preview" icon="icons:refresh" data-i18n="[title]annotations.preview"></paper-icon-button>
                                 </div>
                                 <pb-select-odd emit="preview"></pb-select-odd>
+                                <paper-dropdown-menu id="ddmenu" style="padding-left: 10px;" data-i18n="[title]status.title" label="Status">
+                                    <paper-listbox id="listbox" slot="dropdown-content" selected="0" onchange="choose()">
+                                        <paper-item value="default" style="display:none;" />
+                                        <paper-item value="new">
+                                            <pb-i18n key="status.new" />
+                                        </paper-item>
+                                        <paper-item value="inprogress">
+                                            <pb-i18n key="status.inprogress" />
+                                        </paper-item>
+                                        <paper-item value="review">
+                                            <pb-i18n key="status.review" />
+                                        </paper-item>
+                                        <paper-item value="final">
+                                            <pb-i18n key="status.final" />
+                                        </paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
                             </header>
                             <pb-tabs>
                                 <paper-tab slot="tab">Transkription</paper-tab>

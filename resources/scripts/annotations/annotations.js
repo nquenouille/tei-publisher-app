@@ -81,7 +81,7 @@ window.addEventListener("WebComponentsReady", () => {
 	const form = document.getElementById("edit-form");
 	let selection = null;
 	let activeSpan = null;
-	const view = document.getElementById("view1");
+	const view = document.getElementById("view1"); 
 	const occurDiv = document.getElementById("occurrences");
 	const occurrences = occurDiv.querySelector("ul");
 	const saveBtn = document.getElementById("form-save");
@@ -257,7 +257,8 @@ window.addEventListener("WebComponentsReady", () => {
 			}
 		}
 	}
-
+	
+                
 	/**
 	 * Preview the current document with annotations merged in.
 	 *
@@ -293,6 +294,42 @@ window.addEventListener("WebComponentsReady", () => {
 				changeList.innerHTML = "";
 				document.getElementById("json").innerText = '';
 				document.getElementById("output").code = json.content;
+				
+				
+                /** FPB Show status changes in preview */
+                const ddmenu = document.getElementById("ddmenu").children[0];
+                var menuchildren = Array.from(ddmenu.childNodes);
+                var xml2 = document.getElementById("output").code;
+                menuchildren.forEach( e => {
+                    if ((typeof e.getAttribute === "function") && e.getAttribute('aria-selected')==="true"){
+                    var st = e.lastElementChild.getAttribute("key");
+    				parsers2 = new DOMParser();
+                    xmlDocs2 = parsers2.parseFromString(xml2,"text/xml");
+                    if(xmlDocs2.getElementsByTagName("publicationStmt")[0] && xmlDocs2.getElementsByTagName("availability")[0]){
+                    var ps = xmlDocs2.getElementsByTagName("publicationStmt")[0];
+                    var av = xmlDocs2.getElementsByTagName("availability")[0];
+                    av.removeAttribute("status");
+                    if(!av.hasAttribute("status")){
+                        av.setAttribute("status", st);
+                        ps.appendChild(av);
+                    } else {
+                        console.log("VORSICHT", xmlDocs2.getElementsByTagName("availability")[0].getAttribute("status"));
+                    }
+                    var str = document.getElementById("output").code;
+                    var stat = "availability status=";
+                    var endstr = str.slice(str.indexOf(stat) + stat.length);
+                    var attrib = endstr.substring(0, endstr.indexOf(">"));
+                    var replattr = '"' + st + '"';
+                    document.getElementById("output").code = str.replace(attrib, replattr);
+                    } 
+                    // var currAttr = xmlDocs2.getElementsByTagName("tei:availability")[0].getAttribute("status");
+                    // if(currAttr == "status.inprogress")
+                    // ddmenu.setAttribute("selected", 1)
+                    // console.log("TEST2", view1)
+                }
+                /** *******end of FPB change ****** */
+    
+    
 				if (doStore) {
 					window.localStorage.removeItem(`tei-publisher.annotations.${doc.path}`);
 					window.localStorage.removeItem(`tei-publisher.annotations.${doc.path}.history`);
@@ -308,10 +345,13 @@ window.addEventListener("WebComponentsReady", () => {
 						changeList.appendChild(pre);
 					});
 				}
+                });
 				resolve(json.content);
+				
 
-				/* Show facsimile in tab */
-				var xml = document.getElementById("output").code
+                /** START FPB changes */
+			    /** Show facsimile in tab */
+				var xml = document.getElementById("output").code;
 				parser = new DOMParser();
                 xmlDoc = parser.parseFromString(xml,"text/xml");
                 var par = document.getElementById("facsimile");
@@ -328,7 +368,6 @@ window.addEventListener("WebComponentsReady", () => {
                         }
                     });
                 }
-				/* *******end of FPB change ****** */
 
 				fetch(
 					`${endpoint}/api/preview?odd=${doc.odd}.odd&base=${encodeURIComponent(
@@ -345,17 +384,21 @@ window.addEventListener("WebComponentsReady", () => {
 					}
 				)
 					.then((response) => response.text())
-					/// FPB adding view for Transcription and Lesetext ///
+					
+					/** FPB adding view for Transcription and Lesetext */
 					.then((html) => {
 						const iframe = document.getElementById("html");
 						iframe.srcdoc = html.replaceAll(/<img[^>]*>/g, "");
 						const iframe2 = document.getElementById("html2");
 						iframe2.srcdoc = html.replaceAll(/<img[^>]*>/g, "").replaceAll(/<br[^>]*>/g, ' ').replaceAll(/\s\s+/g, ' ').replaceAll(/¬ /g, '');
-					});
-					/* *********end of FPB change********* */
+					})
+				
 			});
-		});
+			        /** *********END of FPB change********* */
+		})
+		
 	}
+
 
 	/**
 	 * Handler called if user clicks on an annotation action.
@@ -417,6 +460,145 @@ window.addEventListener("WebComponentsReady", () => {
 		window.pbEvents.emit("pb-end-update", "transcription", {});
 	}
 
+    /** START FPB changes */
+    
+	/** FBP Toggle between layout and content */
+	document.getElementById('toggle-toolbar').addEventListener('click', () => {
+	    if (document.getElementById('toolbar-layout').style.display == "none") {
+	        document.getElementById('toolbar-layout').style.display = "block";
+	        document.getElementById('toolbar-content').style.display = "none";
+	        view.shadowRoot.getElementById('content').classList.add('view1-layout-name');
+	        view.shadowRoot.getElementById('content').classList.remove('view1-content-name');
+	        view.shadowRoot.getElementById('marker-layer').classList.add('view1-layout-line');
+	        view.shadowRoot.getElementById('marker-layer').classList.remove('view1-content-line');
+	        view.refreshMarkers();
+	    }
+	    else {
+	        document.getElementById('toolbar-layout').style.display = "none";
+	        document.getElementById('toolbar-content').style.display = "block";
+	        view.shadowRoot.getElementById('content').classList.remove('view1-layout-name');
+	        view.shadowRoot.getElementById('content').classList.add('view1-content-name');
+	        view.shadowRoot.getElementById('marker-layer').classList.add('view1-content-line');
+	        view.shadowRoot.getElementById('marker-layer').classList.remove('view1-layout-line');
+	        view.refreshMarkers();
+	        
+	        const element = Array.from(view.shadowRoot.getElementById('marker-layer').children)
+	        element.forEach(
+	            function (e) {
+	                if (e.classList.contains("marker") && (getComputedStyle(e).display != ("none"))){
+	                    if((parseInt(e.style.marginTop) > 0))
+	                    {
+	                    	e.style.marginTop = (parseInt(e.style.marginTop) - 5 +"px");
+	                 
+	                    }
+	                    
+	                    else if ((parseInt(e.style.marginTop) > 0) && ((parseInt(e.previousSibling.style.marginTop)) > 0) && (getComputedStyle(e).display != ("none"))){
+	                    e.style.marginTop = (parseInt(e.style.marginTop) - 5 +"px"); 
+	                    } 
+	                }
+	            })
+	    }
+	    
+	});
+	
+                    
+    /** FPB Get availability status from xml document and place it into status dropdown menu for showing availability status */
+    
+    function getStatus() {
+		const endpoint = document.querySelector("pb-page").getEndpoint();
+		const doc = document.getElementById("document1");
+		fetch(`${endpoint}/api/status/meta/${doc.path}`, {
+			method: "GET",
+			mode: "cors",
+			credentials: "same-origin",
+			headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(),
+		})
+		.then((response) => {
+			if (response.ok) {
+				return response.json();
+                
+			} else {
+				console.error("Kein Status vorhanden");
+			}
+		})
+		.then((json) => {
+		    const listBoxStat = document.getElementById("listbox");
+		    var sel = listBoxStat.selected;
+		    switch(json.content) {
+		        case "status.new":
+		            listBoxStat[sel] = "1";
+		            break;
+		        case "status.inprogress":
+		             listBoxStat[sel] = "2";
+		            break;
+	            case "status.review":
+	                listBoxStat[sel] = "3";
+	                break;
+	            case "status.final": 
+	                listBoxStat[sel] = "4";
+	                break;
+	            default:
+	                listBoxStat[sel] = "1";
+		        
+		    }
+		    listBoxStat.setAttribute("selected", listBoxStat[sel]);
+		})
+		.catch(() => console.error("Kein Status vorhanden"));
+	}
+	document.addEventListener("pb-page-ready", () => getStatus());
+    
+    
+	/* FBP Set status of the document (new, inprogress, review, final) */
+	/* check actual status and store variable for using it in setStatus() */
+	let actualStatus;
+	function choose() {
+		const ddmenu = document.getElementById("ddmenu").children[0];
+        var menuchildren = Array.from(ddmenu.childNodes);
+        menuchildren.forEach( e => {
+            if ((typeof e.getAttribute === "function") && e.getAttribute('aria-selected')==="true"){
+            actualStatus = e.lastElementChild.getAttribute("key");
+            return actualStatus;
+            }
+        })
+        return actualStatus;
+	};
+	document.getElementById("reload-preview").addEventListener("click", () => choose());
+	document.getElementById("document-save").addEventListener("click", () => choose());
+	
+	/* set status of document via the dropdown menu and store it into xml document when preview reloaded */
+	function setStatus() {
+	const endpoint = document.querySelector("pb-page").getEndpoint();
+	const doc = document.getElementById("document1");
+	var status = actualStatus;
+		window.pbEvents.emit("pb-start-update", "transcription", {});
+		fetch(`${endpoint}/api/status/${doc.path}?status=${status}`, {
+			method: "PUT",
+			mode: "cors",
+			credentials: "same-origin",
+			headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(),
+		})
+		.then((response) => {
+			if (response.ok) {
+				return response.json();
+			}
+		}).then((json) => {
+			window.pbEvents.emit("pb-end-update", "transcription", {});
+		});
+	}
+	document.getElementById("reload-preview").addEventListener("click", () => setStatus());
+	document.getElementById("document-save").addEventListener("click", () => setStatus());
+	
+	
+	
+	/** END of FPB changes*/
+	
+	
 	function checkNERAvailable() {
 		const endpoint = document.querySelector("pb-page").getEndpoint();
 		fetch(`${endpoint}/api/nlp/status`, {
@@ -486,46 +668,7 @@ window.addEventListener("WebComponentsReady", () => {
 	}
 
 	hideForm();
-
-	/// FPB Addendum ///
-		document.getElementById('toggle-toolbar').addEventListener('click', () => {
-			if (document.getElementById('toolbar-layout').style.display == "none") {
-				document.getElementById('toolbar-layout').style.display = "block";
-				document.getElementById('toolbar-content').style.display = "none";
-				view.shadowRoot.getElementById('content').classList.add('view1-layout-name');
-				view.shadowRoot.getElementById('content').classList.remove('view1-content-name');
-				view.shadowRoot.getElementById('marker-layer').classList.add('view1-layout-line');
-				view.shadowRoot.getElementById('marker-layer').classList.remove('view1-content-line');
-				view.refreshMarkers();
-			}
-			else {
-				document.getElementById('toolbar-layout').style.display = "none";
-				document.getElementById('toolbar-content').style.display = "block";
-				view.shadowRoot.getElementById('content').classList.remove('view1-layout-name');
-				view.shadowRoot.getElementById('content').classList.add('view1-content-name');
-				view.shadowRoot.getElementById('marker-layer').classList.add('view1-content-line');
-				view.shadowRoot.getElementById('marker-layer').classList.remove('view1-layout-line');
-				view.refreshMarkers();
-				
-				const element = Array.from(view.shadowRoot.getElementById('marker-layer').children)
-				element.forEach(
-					function (e) {
-						if (e.classList.contains("marker") && (getComputedStyle(e).display != ("none"))){
-							if((parseInt(e.style.marginTop) > 0))
-							{
-								e.style.marginTop = (parseInt(e.style.marginTop) - 5 +"px");
-						 
-							}
-							
-							else if ((parseInt(e.style.marginTop) > 0) && ((parseInt(e.previousSibling.style.marginTop)) > 0) && (getComputedStyle(e).display != ("none"))){
-							e.style.marginTop = (parseInt(e.style.marginTop) - 5 +"px"); 
-							} 
-						}
-					})
-			}
-			
-		});
-	/// END FPB Addendum ///	
+	
 
 	// apply annotation action
 	saveBtn.addEventListener("click", () => save());
@@ -563,7 +706,7 @@ window.addEventListener("WebComponentsReady", () => {
 	if (saveDocBtn.dataset.shortcut) {
 		window.hotkeys(saveDocBtn.dataset.shortcut, () => preview(view.annotations, true));
 	}
-
+    
 	// save and download merged TEI to local file
 	const downloadBtn = document.getElementById('document-download');
 	if ('showSaveFilePicker' in window) {
@@ -584,7 +727,8 @@ window.addEventListener("WebComponentsReady", () => {
 	} else {
 		downloadBtn.style.display = 'none';
 	}
-
+    
+    
 	// mark-all occurrences action
 	const markAllBtn = document.getElementById("mark-all");
 	if (markAllBtn.dataset.shortcut) {
@@ -678,6 +822,8 @@ window.addEventListener("WebComponentsReady", () => {
 			actionHandler(button);
 		});
 	});
+	
+	
 	window.pbEvents.subscribe("pb-authority-select", "transcription", (ev) =>
 		authoritySelected(ev.detail)
 	);
