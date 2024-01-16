@@ -76,6 +76,12 @@ declare function idx:get-metadata($root as element(), $field as xs:string) {
                 root($root)//body,
                 $root/dbk:section
             )
+            (: START FPB changes - Status facet :)
+            case "availability" return
+                head(
+                    $header//tei:fileDesc/tei:publicationStmt/tei:availability/@status
+                )
+            (: END of FPB changes :)
             default return
                 ()
 };

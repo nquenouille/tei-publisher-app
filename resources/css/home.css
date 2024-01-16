@@ -20,6 +20,12 @@ app-header-layout {
     margin: 0;
 }
 
+/** FPB - Added for Status design in document list */
+.documents div.tei-publicationStmt1 {
+    color:green;
+    font-size: 80%;
+}
+
 .documents .error {
     color: #c02020;
 }

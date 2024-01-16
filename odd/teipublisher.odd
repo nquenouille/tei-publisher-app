@@ -468,9 +468,13 @@
         </model>
                 </elementSpec>
                   <elementSpec ident="publicationStmt" mode="add">
-                    <model output="web" behaviour="block">
-            <param name="content" value="availability/licence"/>
-        </model>
+                  <!-- <model output="web" behaviour="block">
+                    <param name="content" value="availability/licence"/>
+                  </model> -->
+                  <!-- Show status of availability in document list -->
+                  <model output="web" behaviour="block">
+                    <param name="content" value="if(availability/@status = 'status.new') then 'Status: New' else if (availability/@status = 'status.inprogress') then 'Status: In Progress' else if (availability/@status = 'status.review') then 'Status: In Review' else if (availability/@status = 'status.final') then 'Status: Done' else if (availability/@status) then concat('Status: ', availability/@status) else 'No status' "/>
+                  </model>
                     <model behaviour="omit"/>
                 </elementSpec>
                   <elementSpec ident="q" mode="change">
