@@ -246,6 +246,76 @@ declare %private function anno:delete($nodes as node()*, $target as node()) {
                         $node/@*,
                         anno:delete($node/node(), $target)
                     }
+            
+                        
+            (: FPB Additions :)
+            case element(tei:addrLine) return
+                if ($target instance of element(tei:address) and $target is $node/..) then
+                    element exist:delete {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+                else if ($node is $target) then
+                    element exist:delete {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+                else
+                    element { node-name($node) } {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+            case element(tei:p) return
+                if ($target instance of element(tei:postscript) and $target is $node/..) then
+                    element exist:delete {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+                else if ($node is $target) then
+                    element exist:delete {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+                else
+                    element { node-name($node) } {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+            case element(tei:note) return
+                if ($target instance of element(tei:num) and $target is $node/..) then
+                    element exist:delete {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+                else if ($node is $target) then
+                    element exist:delete {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+                else
+                    element { node-name($node) } {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+            case element(tei:body) return
+                if ($target instance of element(tei:floatingText) and $target is $node/..) then
+                    element exist:delete {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+                else if ($node is $target) then
+                    element exist:delete {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+                else
+                    element { node-name($node) } {
+                        $node/@*,
+                        anno:delete($node/node(), $target)
+                    }
+                    
+            (: END of FPB Additions :)
+            
             case element() return
                 if ($node is $target) then
                     element exist:delete {
