@@ -170,6 +170,132 @@
 			}
     	},	
 		
+		"/api/finished/save/{id}": {
+			"get": {
+				"summary": "Gets the finished document and save it into edition's app",
+				"description": "Get the source of a document, either as XML, text or binary and save it into edition's app.",
+				"tags": ["finished-documents"],
+				"operationId": "custom:save-doc",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Content of the document",
+						"content": {
+							"application/xml": {
+								"schema": {
+									"type": "string"
+								}
+							},
+							"text/markdown": {
+								"schema": {
+									"type": "string"
+								}
+							},
+							"text/text": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"410": {
+						"description": "Document deleted"
+					}
+				}
+			}
+		},
+		
+    	"/api/finished/{id}": {
+			"get": {
+				"summary": "Get the source of a document",
+				"description": "Get the source of a document, either as XML, text or binary.",
+				"tags": ["finished-documents"],
+				"operationId": "custom:get-doc",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Content of the document",
+						"content": {
+							"application/xml": {
+								"schema": {
+									"type": "string"
+								}
+							},
+							"text/markdown": {
+								"schema": {
+									"type": "string"
+								}
+							},
+							"text/text": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"410": {
+						"description": "Document deleted"
+					}
+				}
+			}
+		},
+		
+		"/api/finished": {
+			"get": {
+				"summary": "List available finished documents",
+				"description": "Lists all finished documents.",
+				"tags": ["finished-documents"],
+				"operationId": "custom:list-finished-documents",
+				"responses": {
+					"200": {
+						"description": "Array of documents",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"name": {
+												"type": "string"
+											},
+											"title": {
+												"type": "string"
+											},
+											"status": {
+												"type": "string"
+											},
+											"path": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		
     	"/api/status/meta/{path}": {
 			"get": {
 				"summary": "Returns some metadata about the document",
