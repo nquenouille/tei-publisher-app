@@ -137,3 +137,20 @@ declare function api:save-doc($request as map(*)) {
         else
             error($errors:BAD_REQUEST, "No document specified")
 };
+
+(:  Copies document from annotate collection to BachLetters collection. CAVEAT: If name of the edition's app changes, change it here, too! :)
+declare function api:copy-doc($request as map(*)) {
+    let $doca := xmldb:decode($request?parameters?id)
+    let $doc := replace($request?parameters?id, "annotate/", "")
+    let $srcDoc := config:get-document($doca)
+    let $sourceURI := xmldb:encode-uri($config:app-root || "/data/annotate/")
+    let $targetURI := xmldb:encode-uri("/db/apps/BachLetters/data/")
+    let $preserve := "true"
+    let $src := util:expand($srcDoc/*, 'add-exist-id=all')
+    let $attr := $src//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability[@status="status.final"]
+    return 
+        if($attr) then
+            xmldb:copy-resource($sourceURI, $doc, $targetURI, $doc, $preserve)
+        
+        else ()
+};

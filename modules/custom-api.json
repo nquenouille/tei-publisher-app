@@ -168,9 +168,52 @@
 					}
 				}
 			}
-    	},	
+    	},
+    	
 		
-		"/api/finished/save/{id}": {
+    	"/api/status/meta/{path}": {
+			"get": {
+				"summary": "Returns some metadata about the document",
+				"tags": ["status"],
+				"operationId": "custom:status-metadata",
+				"parameters": [
+					{
+						"name": "path",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"example": "annotate/bach_test2.xml"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Metadata about the document as JSON object",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Document not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+	
+	
+	"/api/finished/save/{id}": {
 			"get": {
 				"summary": "Gets the finished document and save it into edition's app",
 				"description": "Get the source of a document, either as XML, text or binary and save it into edition's app.",
@@ -292,51 +335,44 @@
 							}
 						}
 					}
+				},
+				"410": {
+						"description": "Document NOT copied"
 				}
 			}
 		},
-		
-    	"/api/status/meta/{path}": {
+		"/api/finished/copy/{id}": {
 			"get": {
-				"summary": "Returns some metadata about the document",
-				"tags": ["status"],
-				"operationId": "custom:status-metadata",
+				"summary": "Copy finished documents to BACH",
+				"description": "Copy finished documents to BACH.",
+				"tags": ["finished-documents"],
+				"operationId": "custom:copy-doc",
 				"parameters": [
 					{
-						"name": "path",
+						"name": "id",
 						"in": "path",
 						"required": true,
 						"schema": {
-							"type": "string",
-							"example": "annotate/bach_test2.xml"
+							"type": "string"
 						}
 					}
 				],
 				"responses": {
 					"200": {
-						"description": "Metadata about the document as JSON object",
+						"description": "Document copied.",
 						"content": {
-							"application/json": {
+							"text/html": {
 								"schema": {
-									"type": "object"
-								}
-							}
-						}
-					},
-					"404": {
-						"description": "Document not found",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object"
+									"type": "string"
 								}
 							}
 						}
 					}
 				}
 			}
+			
 		}
-	},
+    },
     "security": [
         {
             "cookieAuth": []

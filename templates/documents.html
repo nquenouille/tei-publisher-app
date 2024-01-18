@@ -60,6 +60,17 @@
                                 </paper-item>
                             </paper-listbox>
                         </paper-menu-button>
+                        /** FPB: Added publish button */
+                        <pb-restricted login="login" group="tei">
+                            <pb-ajax url="api/finished/copy/${ident}" method="get" data-template="pages:parse-params" confirm="browse.confirmPublication">
+                                <paper-button id="publishDoc" style="color:darkgreen;">
+                                    <iron-icon icon="editor:publish"></iron-icon>
+                                    <span class="label">
+                                        <pb-i18n key="browse.publish"/>
+                                    </span>
+                                </paper-button>
+                            </pb-ajax>
+                        </pb-restricted>
                     </app-toolbar>
                 </div>
             </li>
