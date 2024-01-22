@@ -307,6 +307,16 @@
 				"description": "Lists all finished documents.",
 				"tags": ["finished-documents"],
 				"operationId": "custom:list-finished-documents",
+				"parameters": [
+					{
+						"name": "date",
+						"in": "query",
+						"description": "Date",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "Array of documents",
@@ -327,6 +337,9 @@
 												"type": "string"
 											},
 											"path": {
+												"type": "string"
+											},
+											"lastModified": {
 												"type": "string"
 											}
 										}

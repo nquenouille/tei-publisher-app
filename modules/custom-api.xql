@@ -92,7 +92,7 @@ declare function api:get-doc($request as map(*)) {
             error($errors:BAD_REQUEST, "No document specified")
 };
 
-(: Check which documents have status='status.final' and show name, description and status :)
+(: Check which documents have status='status.final' and have been modified after a given date (input), and show name, description and status :)
 
 declare function api:list-finished-documents($request as map(*)) {
     array {
@@ -100,13 +100,15 @@ declare function api:list-finished-documents($request as map(*)) {
         let $description := $html//tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/string()
         let $status := $html//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability/@status/string()
         let $path := $config:app-root || "/data/annotate/" || util:document-name($html)
+        let $lmdate := xmldb:last-modified(util:collection-name($html), util:document-name($html)) cast as xs:string
         return
-            if($status = "status.final") then
+            if($status = "status.final" and ($lmdate > $request?parameters?date)) then
             map {
                 "name": util:document-name($html),
                 "path": $path,
                 "title": $description,
-                "status": $status
+                "status": $status,
+                "lastModified": xs:date(xmldb:last-modified(util:collection-name($html), util:document-name($html))) 
             }
             else
             ()
