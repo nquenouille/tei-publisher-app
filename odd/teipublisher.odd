@@ -378,13 +378,6 @@
             </outputRendition>
         </model>
                 </elementSpec>
-                  <elementSpec ident="licence" mode="add">
-                    <model output="web" predicate="@target" behaviour="link" cssClass="licence">
-            <param name="content" value="'Licence'"/>
-            <param name="uri" value="@target"/>
-        </model>
-                    <model behaviour="omit"/>
-                </elementSpec>
                   <elementSpec ident="lb" mode="change">
                     <model behaviour="break" useSourceRendition="true">
             <param name="type" value="'line'"/>
@@ -468,14 +461,28 @@
         </model>
                 </elementSpec>
                   <elementSpec ident="publicationStmt" mode="add">
-                  <!-- <model output="web" behaviour="block">
-                    <param name="content" value="availability/licence"/>
-                  </model> -->
-                  <!-- Show status of availability in document list -->
-                  <model output="web" behaviour="block">
-                    <param name="content" value="if(availability/@status = 'status.new') then 'Status: New' else if (availability/@status = 'status.inprogress') then 'Status: In Progress' else if (availability/@status = 'status.review') then 'Status: In Review' else if (availability/@status = 'status.final') then 'Status: Done' else if (availability/@status) then concat('Status: ', availability/@status) else 'No status' "/>
-                  </model>
+                    <model output="web" behaviour="block">
+            <param name="content" value="availability/licence"/>
+        </model>
                     <model behaviour="omit"/>
+                </elementSpec>
+                  <elementSpec ident="licence" mode="add">
+                    <model output="web" predicate="@target" behaviour="link" cssClass="licence">
+            <param name="content" value="'Licence'"/>
+            <param name="uri" value="@target"/>
+        </model>
+                    <model behaviour="omit"/>
+                </elementSpec>
+                <elementSpec ident="revisionDesc" mode="add">
+                    <model output="web" behaviour="block" cssClass="revisionDesc">
+                    <param name="content" value="if(./@status = 'status.new') then 'Status: New' else if (./@status = 'status.inprogress') then 'Status: In Progress' else if (./@status = 'status.review') then 'Status: In Review' else if (./@status = 'status.final') then 'Status: Done' else 'No status' "/>
+                    <outputRendition xml:space="preserve">
+                        color: darkgreen; 
+                        font-size: 75%;
+                    </outputRendition>
+                    </model>
+                    <model behaviour="omit"/>
+                </elementSpec>
                 </elementSpec>
                   <elementSpec ident="q" mode="change">
                     <model predicate="l" behaviour="block" useSourceRendition="true">
@@ -658,6 +665,9 @@
                     <model behaviour="omit"/>
                 </elementSpec>
                   <elementSpec ident="revisionDesc" mode="change">
+                  <model behaviour="block" cssClass="header-short">
+                  <param name="content" value="revisionDesc"/>
+                  </model>
                     <model behaviour="omit"/>
                 </elementSpec>
                   <elementSpec ident="encodingDesc" mode="change">

@@ -30,7 +30,7 @@ declare function api:status-metadata($request as map(*)) {
     return
         if (exists($xml)) then
             let $config := tpu:parse-pi(root($xml), ())
-            let $attr := root($xml)//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability/@status
+            let $attr := root($xml)//tei:teiHeader/tei:revisionDesc/@status
             return map {"content": data($attr)}
         else
             error($errors:NOT_FOUND, "Document " || $doc || " not found")
@@ -51,13 +51,13 @@ declare function api:status-save($request as map(*)) {
             error($errors:FORBIDDEN, "Not allowed to write to " || $path)
         else if ($srcDoc) then
             let $doc := util:expand($srcDoc/*, 'add-exist-id=all')
-            let $attr := $srcDoc//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability
-            let $status := $srcDoc//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability/@status
+            let $attr := $srcDoc//tei:teiHeader/tei:revisionDesc
+            let $status := $srcDoc//tei:teiHeader/tei:revisionDesc/@status
             let $docMerge := 
                 if (exists($attr)) then 
                     update value $status with $stat
                 else 
-                    update insert (<tei:availability status="status.new"><tei:licence target="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</tei:licence></tei:availability>) into $srcDoc//tei:teiHeader/tei:fileDesc/tei:publicationStmt
+                    update insert (<tei:revisionDesc status="status.new"></tei:revisionDesc>) into $srcDoc//tei:teiHeader
 (:            let $stored :=:)
 (:                if (request:get-method() = 'PUT') then :)
 (:                    xmldb:store(util:collection-name($srcDoc), util:document-name($srcDoc), $srcDoc):)
@@ -80,7 +80,7 @@ declare function api:get-doc($request as map(*)) {
             let $filename := replace($doc, "^.*/([^/]+)$", "$1")
             let $mime := ($request?parameters?type, xmldb:get-mime-type($path))[1]
             let $src := util:expand($srcDoc/*, 'add-exist-id=all')
-            let $attr := $src//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability[@status="status.final"]
+            let $attr := $src//tei:teiHeader/tei:revisionDesc[@status="status.final"]
             return
                 if (util:binary-doc-available($path) and $attr) then
                     response:stream-binary(util:binary-doc($path), $mime, $filename)
@@ -98,7 +98,7 @@ declare function api:list-finished-documents($request as map(*)) {
     array {
         for $html in collection($config:app-root || "/data/annotate")/*
         let $description := $html//tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/string()
-        let $status := $html//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability/@status/string()
+        let $status := $html//tei:teiHeader/tei:revisionDesc/@status/string()
         let $path := $config:app-root || "/data/annotate/" || util:document-name($html)
         let $lmdate := xmldb:last-modified(util:collection-name($html), util:document-name($html)) cast as xs:string
         return
@@ -126,7 +126,7 @@ declare function api:save-doc($request as map(*)) {
             let $filename := replace($doc, "^.*/([^/]+)$", "$1")
             let $mime := ($request?parameters?type, xmldb:get-mime-type($path))[1]
             let $src := util:expand($srcDoc/*, 'add-exist-id=all')
-            let $attr := $src//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability[@status="status.final"]
+            let $attr := $src//tei:teiHeader/tei:revisionDesc[@status="status.final"]
             
             let $stored := xmldb:store($storepath, $request?parameters?id || ".xml", $srcDoc, "text/xml")
             return
@@ -149,7 +149,7 @@ declare function api:copy-doc($request as map(*)) {
     let $targetURI := xmldb:encode-uri("/db/apps/BachLetters/data/")
     let $preserve := "true"
     let $src := util:expand($srcDoc/*, 'add-exist-id=all')
-    let $attr := $src//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability[@status="status.final"]
+    let $attr := $src//tei:teiHeader/tei:revisionDesc[@status="status.final"]
     return 
         if($attr) then
             xmldb:copy-resource($sourceURI, $doc, $targetURI, $doc, $preserve)

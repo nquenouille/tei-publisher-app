@@ -14,8 +14,8 @@
                 <facet dimension="language" expression="nav:get-metadata(ancestor::tei:TEI, 'language')"/>
                 <facet dimension="feature" expression="nav:get-metadata(ancestor::tei:TEI, 'feature')"/>
                 <facet dimension="form" expression="nav:get-metadata(ancestor::tei:TEI, 'form')"/>
-                <facet dimension="period" expression="nav:get-metadata(ancestor::tei:TEI, 'period')"/>
-                <facet dimension="availability" expression="nav:get-metadata(ancestor::tei:TEI, 'availability')"/>
+                <facet dimension="period" expression="nav:get-metadata(ancestor::tei:TEI, 'period')"/>                
+                <facet dimension="status" expression="nav:get-metadata(ancestor::tei:TEI, 'status')"/>
             </text>
             <text qname="tei:div">
                 <!-- exclude nested divs which are indexed separately -->

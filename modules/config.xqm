@@ -168,14 +168,12 @@ declare variable $config:facets := [
 
     (: START FPB changes - added availability facet (Status)   :)
     map {
-        "dimension": "availability",
-        "heading": "facets.availability",
+        "dimension": "status",
+        "heading": "facets.status",
         "max": 10,
         "hierarchical": false(),
         "output": function($label) {
             switch($label)
-                case "free" return "Free"
-                case "restricted" return "Restricted"
                 case "status.new" return "New"
                 case "status.inprogress" return "In Progress"
                 case "status.review" return "To be reviewed"
