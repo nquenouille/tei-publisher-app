@@ -618,9 +618,10 @@ window.addEventListener("WebComponentsReady", () => {
 		saveAnchor.addEventListener("click", () => {
 			window.alert("Bitte noch einmal abspeichern oder Dokument neu laden, damit die Änderung sichtbar wird.");
 			transformNotes();
+			reload();
 		});
 		
-		document.getElementById("form-save").addEventListener("click", () => window.alert("Abspeichern nicht vergessen! Bei Kommentaren Anker setzen."));
+		document.getElementById("form-save").addEventListener("click", () => window.alert("Abspeichern nicht vergessen! Bei Kommentaren danach einen Anker setzen."));
 	/** END of FPB changes*/
 	
 	
