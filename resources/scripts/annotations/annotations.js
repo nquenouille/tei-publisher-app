@@ -599,7 +599,6 @@ window.addEventListener("WebComponentsReady", () => {
     function transformNotes() {
 		const endpoint = document.querySelector("pb-page").getEndpoint();
 		const doc = document.getElementById("document1");
-			window.pbEvents.emit("pb-start-update", "transcription", {});
 			fetch(`${endpoint}/api/note/${doc.path}`, {
 				method: "PUT",
 				mode: "cors",
@@ -613,12 +612,15 @@ window.addEventListener("WebComponentsReady", () => {
 				if (response.ok) {
 					return response.json();
 				}
-			}).then((json) => {
-				window.pbEvents.emit("pb-end-update", "transcription", {});
-			});
+			})
 		}
-		document.getElementById("reload-preview").addEventListener("click", () => transformNotes());
-		document.getElementById("document-save").addEventListener("click", () => transformNotes());
+		const saveAnchor = document.getElementById("set-anchor");
+		saveAnchor.addEventListener("click", () => {
+			window.alert("Bitte noch einmal abspeichern oder Dokument neu laden, damit die Änderung sichtbar wird.");
+			transformNotes();
+		});
+		
+		document.getElementById("form-save").addEventListener("click", () => window.alert("Abspeichern nicht vergessen! Bei Kommentaren Anker setzen."));
 	/** END of FPB changes*/
 	
 	
