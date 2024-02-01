@@ -156,3 +156,69 @@ declare function api:copy-doc($request as map(*)) {
         
         else ()
 };
+
+(: Add numbers to anchors and notes as well as xml:id to anchor and target attr to note :)
+declare %private function api:transformNotes($nodes as node()*) {
+    for $node in $nodes
+    return
+        typeswitch($node)
+        case document-node() return 
+            api:transformNotes($node/node())
+        case element(tei:anchor) return
+            let $num := count($node/preceding::tei:anchor) 
+            let $n := update value $node/@n with $num+1
+            let $target := update value $node/@xml:id with concat('n-', $num+1)
+            return
+                ()
+        case element(tei:note) return
+            let $number := count($node/preceding::tei:note)
+            let $n := update value $node/@n with $number+1
+            let $target := update value $node/@target with concat('#n-', $number+1)
+            return
+                ()
+        case element() return 
+            element {node-name($node)} {
+                $node/@*, 
+                api:transformNotes($node/node())
+            }
+        default return ()
+};
+
+(: Replace notes with anchors and put notes into the "commentary" div :)
+declare function api:setNotes($request as map(*)) {
+    let $doc := xmldb:decode($request?parameters?path)
+    let $srcDoc := config:get-document($doc)
+    let $src := util:expand($srcDoc/*, 'add-exist-id=all')
+    let $notes := $srcDoc//*/tei:text/tei:body/tei:div[@type='original']//*/tei:note
+    let $hasAccess := sm:has-access(document-uri(root($srcDoc)), "rw-")
+    return
+        if (not($hasAccess) and request:get-method() = 'PUT') then
+            error($errors:FORBIDDEN, "Not allowed to write to " || $doc)
+        else if($srcDoc and $notes) then 
+            for $note in $notes 
+            let $putAnchor := update insert <tei:anchor xml:id="" n="" /> following $note[@n=""]
+            let $numeroAnchor := api:transformNotes($srcDoc//*/tei:anchor)
+            let $numeroNotes := update value $note/@n with $note/following::tei:anchor/@n
+            let $targetNotes := update value $note/@target with (concat('#n-', $note/@n))
+            let $notenumber := $note/@n
+            let $notetext := 
+                if ($srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n = $notenumber]) then 
+                        update insert $note preceding $srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n= $notenumber]
+                    else if
+                        ($srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n = $notenumber -1]) then 
+                        update insert $note following $srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n= ($notenumber -1)] 
+                    else if 
+                        ($srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n = max($notenumber)]) then 
+                        update insert $note following $srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n= max($notenumber)] 
+                    else if
+                        ($srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n = $notenumber +1]) then 
+                        update insert $note preceding $srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n= $notenumber +1]
+                    else 
+                        update insert $note into $srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p
+            let $delNotes := update delete $srcDoc//tei:text/tei:body/tei:div[@type='original']//*/$note
+            let $newNotes := $srcDoc//*/tei:text/tei:body/tei:div[@type='commentary']/*/tei:note
+            let $countNewNotes := if ($newNotes) then api:transformNotes($newNotes) else ()
+            return map {
+                    "content": $srcDoc}
+        else api:transformNotes($srcDoc)
+};

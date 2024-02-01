@@ -595,7 +595,30 @@ window.addEventListener("WebComponentsReady", () => {
 	document.getElementById("document-save").addEventListener("click", () => setStatus());
 	
 	
-	
+	/* Replace notes with anchor element and put note into <div type="commentary"> */
+    function transformNotes() {
+		const endpoint = document.querySelector("pb-page").getEndpoint();
+		const doc = document.getElementById("document1");
+			window.pbEvents.emit("pb-start-update", "transcription", {});
+			fetch(`${endpoint}/api/note/${doc.path}`, {
+				method: "PUT",
+				mode: "cors",
+				credentials: "same-origin",
+				headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(),
+			})
+			.then((response) => {
+				if (response.ok) {
+					return response.json();
+				}
+			}).then((json) => {
+				window.pbEvents.emit("pb-end-update", "transcription", {});
+			});
+		}
+		document.getElementById("reload-preview").addEventListener("click", () => transformNotes());
+		document.getElementById("document-save").addEventListener("click", () => transformNotes());
 	/** END of FPB changes*/
 	
 	

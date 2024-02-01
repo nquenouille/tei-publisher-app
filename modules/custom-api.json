@@ -384,6 +384,73 @@
 				}
 			}
 			
+		},
+		"/api/note/{path}": {
+			"put": {
+				"summary": "Set notes to right position",
+				"description": "Set notes to right position",
+				"tags": ["notes"],
+				"operationId": "custom:setNotes",
+				"x-constraints": {
+					"groups": ["tei"]
+				},
+				"requestBody": {
+					"description": "Replace notes with anchor elements and put notes at the end of the document.",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"context": {
+											"type": "string"
+										},
+										"start": {
+											"type": "number"
+										},
+										"end": {
+											"type": "number"
+										},
+										"type": {
+											"type": "string"
+										},
+										"text": {
+											"type": "string"
+										},
+										"properties": {
+											"type": "object"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"parameters": [
+					{
+						"name": "path",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Notes set.",
+						"content": {
+							"text/html": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+			
 		}
     },
     "security": [
