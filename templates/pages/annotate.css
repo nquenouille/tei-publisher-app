@@ -1,6 +1,6 @@
 main {
     display: grid;
-    grid-template-columns: 280px 1fr 30%;
+    grid-template-columns: 280px 1fr 35%; /* FPB */
     grid-template-rows: 100%;
     gap: 0 10px;
     height: calc(100vh - 150px);
@@ -101,6 +101,7 @@ pb-tabs pre {
 
 #view1::part(content) {
     line-height: 2;
+    margin-right: 10px; /* FPB */
 }
 
 #form-save {
