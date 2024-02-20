@@ -171,7 +171,7 @@ declare %private function api:transformNotes($nodes as node()*) {
             return
                 ()
         case element(tei:note) return
-            let $number := count($node/preceding::tei:note)
+            let $number := count($node/preceding-sibling::tei:note)
             let $n := update value $node/@n with $number+1
             let $target := update value $node/@target with concat('#n-', $number+1)
             return
@@ -216,7 +216,7 @@ declare function api:setNotes($request as map(*)) {
                     else 
                         update insert $note into $srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p
             let $delNotes := update delete $srcDoc//tei:text/tei:body/tei:div[@type='original']//*/$note
-            let $newNotes := $srcDoc//*/tei:text/tei:body/tei:div[@type='commentary']/*/tei:note
+            let $newNotes := $srcDoc//*/tei:text/tei:body/tei:div[@type='commentary']/p/*
             let $countNewNotes := if ($newNotes) then api:transformNotes($newNotes) else ()
             return map {
                     "content": $srcDoc}
