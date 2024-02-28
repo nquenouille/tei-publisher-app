@@ -18,8 +18,8 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             <persName xmlns="http://www.tei-c.org/ns/1.0" ref="{$properties?ref}">{$content()}</persName>
         case "place" return
             <placeName xmlns="http://www.tei-c.org/ns/1.0" ref="{$properties?ref}">{$content()}</placeName>
-        case "term" return
-            <term xmlns="http://www.tei-c.org/ns/1.0" ref="{$properties?ref}">{$content()}</term>
+        (: case "term" return
+            <term xmlns="http://www.tei-c.org/ns/1.0" ref="{$properties?ref}">{$content()}</term> :)
         case "organization" return
             <orgName xmlns="http://www.tei-c.org/ns/1.0" ref="{$properties?ref}">{$content()}</orgName>
         case "hi" return
@@ -38,9 +38,6 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             <choice xmlns="http://www.tei-c.org/ns/1.0"><sic>{$content()}</sic><corr>{$properties?corr}</corr></choice>
         case "reg" return
             <choice xmlns="http://www.tei-c.org/ns/1.0"><orig>{$content()}</orig><reg>{$properties?reg}</reg></choice>
-        case "note" return
-            <seg xmlns="http://www.tei-c.org/ns/1.0" type="annotated">{$content()}
-            <note xmlns="http://www.tei-c.org/ns/1.0" type="annotation">{$properties?note}</note></seg>
         case "date" return
             <date xmlns="http://www.tei-c.org/ns/1.0">
             {
@@ -79,6 +76,15 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             </del>
         case "floatingText" return
             <floatingText xmlns="http://www.tei-c.org/ns/1.0"><body><p>{$content()}</p></body></floatingText>
+        case "gloss" return
+            <gloss xmlns="http://www.tei-c.org/ns/1.0">
+                {
+                for $prop in map:keys($properties)[. = ('target', 'type')]
+                return
+                    attribute { $prop } { $properties($prop) },
+                $content()
+            }
+            </gloss>
         case "handShift" return
             (<handShift xmlns="http://www.tei-c.org/ns/1.0" scribe="{$properties?scribe}"/>, $content())
         case "head" return
@@ -132,6 +138,9 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             <add xmlns="http://www.tei-c.org/ns/1.0" hand="{$properties?hand}" type="{$properties?type}" place="{$properties?place}">{$content()}</add>
         case "supplied" return
             ($content(), <supplied xmlns="http://www.tei-c.org/ns/1.0" reason="{$properties?reason}">{$properties?supplied}</supplied>)
+        case "term" return
+            <term xmlns="http://www.tei-c.org/ns/1.0" xml:id="{$properties?xmlid}">{$content()}</term>
+        
         default return
             $content()
         
@@ -149,8 +158,8 @@ declare function anno:occurrences($type as xs:string, $key as xs:string) {
             collection($config:data-default)//tei:persName[@ref = $key]
         case "place" return
             collection($config:data-default)//tei:placeName[@ref = $key]
-        case "term" return
-            collection($config:data-default)//tei:term[@ref = $key]
+        (: case "term" return
+            collection($config:data-default)//tei:term[@ref = $key] :)
         case "organization" return
             collection($config:data-default)//tei:orgName[@ref = $key]
          default return ()
@@ -210,10 +219,10 @@ declare function anno:create-record($type as xs:string, $id as xs:string, $data 
             <org xmlns="http://www.tei-c.org/ns/1.0" xml:id="{$id}">
                 <orgName type="full">{$data?name}</orgName>
             </org>
-        case "term" return
+        (: case "term" return
             <category xmlns="http://www.tei-c.org/ns/1.0" xml:id="{$id}">
                 <catDesc>{$data?name}</catDesc>
-            </category>
+            </category> :)
         default return
             ()
 };
@@ -251,13 +260,13 @@ declare function anno:query($type as xs:string, $query as xs:string?) {
                         "details": $org/tei:note/string(),
                         "link": $org/tei:ptr/@target/string()
                     }
-            case "term" return
+            (: case "term" return
                 for $term in doc($anno:local-authority-file)//tei:taxonomy[ft:query(tei:category, $query)]
                 return
                     map {
                         "id": $term/@xml:id/string(),
                         "label": $term/tei:catDesc/string()
-                    }
+                    } :)
             default return
                 ()
     } catch * {
@@ -275,8 +284,8 @@ declare function anno:insert-point($type as xs:string) {
             doc($anno:local-authority-file)//tei:listPlace
         case "organization" return
             doc($anno:local-authority-file)//tei:listOrg
-        case "term" return
-            doc($anno:local-authority-file)//tei:taxonomy
+        (: case "term" return
+            doc($anno:local-authority-file)//tei:taxonomy :)
         default return
             doc($anno:local-authority-file)//tei:listPerson
 };
@@ -289,6 +298,6 @@ declare function anno:local-search-strings($type as xs:string, $entry as element
     switch($type)
         case "place" return $entry/tei:placeName/string()
         case "organization" return $entry/tei:orgName/string()
-        case "term" return $entry/tei:catDesc/string()
+        (: case "term" return $entry/tei:catDesc/string() :)
         default return $entry/tei:persName/string()
 };

@@ -1,0 +1,355 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <script type="module" src="pb-components-bundle.js" data-template="pages:load-components"/>
+    <custom-style>
+    <style include="pb-common-styles">
+        span {
+            vertical-align: -moz-middle-with-baseline;
+        }
+        input {
+            display: none;
+        }
+        
+        label {
+            display: block;    
+            padding: 8px 22px;
+            margin: 0 0 1px 0;
+            cursor: pointer;
+            background: #d9d6ba;
+            border-radius: 3px;
+            transition: ease .5s;
+        }
+        
+        label:hover {
+            background: #bfbca3;
+        }
+        
+        .panel {
+            background: #ecebda;
+            padding: 10px 25px;
+            border: 1px solid #A7A7A7;
+            margin: 0 0 1px 0;
+            border-radius: 4px;
+        }
+        
+        input + label + .panel {
+            display: none;
+        }
+
+        
+        
+        input:checked + label + .panel {
+            display: block;
+        }
+        
+    </style>
+    </custom-style>
+    </head>
+    <body>
+        <h3>Layout - Strukturelle Tags</h3>
+        <input type="checkbox" id="handshift"/>
+        <label for="handshift">
+            <iron-icon icon="icons:label-outline"/>
+            <span>  Schreiberwechsel</span>
+        </label>
+        <div class="panel">
+            <p>
+                <b>Dieses Tag wird automatisch direkt vor das markierte Wort gesetzt,</b> da es leer ist. Daran denken, daß beim nächsten Schreiberwechsel (z.B. falls der Text mit der ursprünglichen Hand weitergeführt wird) dieses Tag nochmals gesetzt wird. <br/>
+                <br/>
+                <b>Scribe:</b> Schreibername (bei Schreiberwechsel). <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="head"/>
+        <label for="head">
+            <iron-icon icon="icons:face"/>
+            <span>  Head - Überschrift</span>
+        </label>
+        <div class="panel">
+            <p>Head - Überschrift <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="address"/>
+        <label for="address">
+            <iron-icon icon="icons:home"/>
+            <span>  Adresse</span>
+        </label>
+        <div class="panel">
+            <p>Adresse <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="opener"/>
+        <label for="opener">
+            <iron-icon icon="icons:flight-takeoff"/>
+            <span>  Eröffnung des Dokuments</span>
+        </label>
+        <div class="panel">
+            <p>Opener - Brief- oder Dokumenteröffnung. <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="salute"/>
+        <label for="salute">
+            <iron-icon icon="social:mood"/>
+            <span>  Gruß</span>
+        </label>
+        <div class="panel">
+            <p>Salute - Gruß. <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="dateline"/>
+        <label for="dateline">
+            <iron-icon icon="icons:view-day"/>
+            <span>  Datumszeilen</span>
+        </label>
+        <div class="panel">
+            <p>Dateline - Umgibt die Zeilen, die das Datum (und z.B. auch Ort) enthalten. Bitte daran denken, daß hier auch Inhalt-Tags gesetzt werden müssen. <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="closer"/>
+        <label for="closer">
+            <iron-icon icon="icons:flight-land"/>
+            <span>  Closer - Schlußformulierung</span>
+        </label>
+        <div class="panel">
+            <p>Closer - Schlußformulierung / Briefschluss <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="signed"/>
+        <label for="signed">
+            <iron-icon icon="icons:gesture"/>
+            <span>  Unterschrift(en)</span>
+        </label>
+        <div class="panel">
+            <p>Signed - Unterschrift(en). <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="postscript"/>
+        <label for="postscript">
+            <iron-icon icon="icons:more-horiz"/>
+            <span>  Postscriptum</span>
+        </label>
+        <div class="panel">
+            <p>Postscriptum - P.S. <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="floatingText"/>
+        <label for="floatingText">
+            <iron-icon icon="icons:receipt"/>
+            <span>  Zeilenfall beibehalten</span>
+        </label>
+        <div class="panel">
+            <p>Der Zeilenfall wird in der Leseansicht beibehalten. <br/> <b>Nicht in eine Adresse, einen Opener oder Closer setzen.</b> <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="pb"/>
+        <label for="pb">
+            <iron-icon icon="icons:remove"/>
+            <span>  Originale Seitennumerierung</span>
+        </label>
+        <div class="panel">
+            <p>Dieses Tag dient dazu, die originale Seitennumerierung einzufügen.<br/>
+                <br/> <b>n:</b> Seitenzahl <br/> <b>facs:</b> Facsimile-Id (<b>bitte nicht ändern!)</b>
+            </p>
+        </div>
+        
+        <h3>Inhalt - Textuelle Tags</h3>
+        <input type="checkbox" id="persons"/>
+        <label for="persons">
+            <iron-icon icon="social:person"/>
+            <span>  Person</span>
+        </label>
+        <div class="panel">
+            <p>Person - Hier werden Personen annotiert. Diese sind aus einem Menü, welches mit dem Personenregister verbunden ist, auszuwählen. Bitte Bescheid sagen, falls eine Person fehlen sollte.</p>
+        </div>
+        <input type="checkbox" id="organization"/>
+        <label for="organization">
+            <iron-icon icon="social:people"/>
+            <span>  Organisation</span>
+        </label>
+        <div class="panel">
+            <p>Organisation - Hier werden Organisationen annotiert. Diese sind aus einem Menü, welches mit dem Organisationenregister der GND verbunden ist, auszuwählen.</p>
+        </div>
+        <input type="checkbox" id="places"/>
+        <label for="places">
+            <iron-icon icon="maps:place"/>
+            <span>  Ort</span>
+        </label>
+        <div class="panel">
+            <p>Ort - Hier werden Orte/Ortschaften annotiert. Diese sind aus einem Menü, welches mit dem Ortsregister von Geonames verbunden ist, auszuwählen. Die automatisch vergebene Geonames-Id wird lediglich zum Zwecke der Beschaffung von Koordinaten zur Anzeige auf einer Karte genutzt, der Name der Ortschaft wird nicht modernisiert dargestellt.</p>
+        </div>
+        <input type="checkbox" id="date"/>
+        <label for="date">
+            <iron-icon icon="icons:today"/>
+            <span>  Datum</span>
+        </label>
+        <div class="panel">
+            <p>Datum - Hier kann das Datum innerhalb einer zuvor gesetzten Datumszeile (siehe strukturelle Tags) annotiert werden.</p>
+        </div>
+        <input type="checkbox" id="reference"/>
+        <label for="reference">
+            <iron-icon icon="icons:link"/>
+            <span>  Link</span>
+        </label>
+        <div class="panel">
+            <p>Link - Hier kann eine Referenz per Link gesetzt werden. Dies geschieht unter dem Attribut <i>target</i> in Form einer URL.</p>
+        </div>
+        <input type="checkbox" id="abbreviation"/>
+        <label for="abbreviation">
+            <iron-icon icon="icons:translate"/>
+            <span>  Abkürzung</span>
+        </label>
+        <div class="panel">
+            <p>Hier können Abkürzungen markiert und aufgelöst werden. Diese werden im Allgemeinen als Mouseover dargestellt. <br/>
+                <br/> <b>Erweiterung:</b> Auflösung der Abkürzung <br/> <b>Typ:</b> Abkürzungen, die in der Lesefassung aufgelöst dargestellt werden sollen (ohne Mouseover), erhalten den "Typ" "resolve". <br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
+        </div>
+        <input type="checkbox" id="sic"/>
+        <label for="sic">
+            <iron-icon icon="editor:strikethrough-s"/>
+            <span>  Sic(!)</span>
+        </label>
+        <div class="panel">
+            <p>Korrektur des Textes - Hier kann der Text korrigiert werden, wenn der Schreiber einen Fehler gemacht haben sollte. Im Mouseover wird die ursprüngliche Fassung angezeigt.</p>
+        </div>
+        <input type="checkbox" id="regularization"/>
+        <label for="regularization">
+            <iron-icon icon="editor:wrap-text"/>
+            <span>  Regularisierung</span>
+        </label>
+        <div class="panel">
+            <p>Regularisierung - Mit diesem Tag werden unter anderem Wörter gekennzeichnet, die im Original vokalische u/v/w, Buchstaben mit Trema oder auch Ligaturen (z.B. æ) aufweisen und im Lesetext in moderner Form erscheinen sollen. <br/>
+                <br/>
+                <b>Regularisierung:</b> Das regularisierte Wort. <br/> <b>Typ:</b> "modern", falls in der Textfassung das Wort in Originalschreibweise übernommen werden soll, die Originalschreibweise in der Lesefassung jedoch lediglich als Mouseover erscheinen soll. Andere Regularisierungen, die nur als Mouseover angezeigt werden sollen, können ohne oder mit anderer "Type"-Angabe ausgezeichnet werden. <br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
+        </div>
+        <input type="checkbox" id="apparatus"/>
+        <label for="apparatus">
+            <iron-icon icon="icons:visibility"/>
+            <span>  Apparatus criticus</span>
+        </label>
+        <div class="panel">
+            <p>Apparatus criticus - Hier werden bei verschiedenen Versionen ein und desselben Textes (z.B. Entwurf, Reinschrift) die verschiedenen Lesarten vermerkt. Dieses Tag ist etwas verbugt: Man kann entweder alle Textzeugen auf einmal anlegen (+-Button nutzen!) und abspeichern, oder einzeln. Falls man sich für letzteres entscheidet, also anlegt und abspeichert, muß bei jedem weiteren Textzeugen die Annotation zunächst gelöscht werden (und abspeichern) und wieder angelegt werden. Hierbei bleiben in der Regel die zuvor gemachten Angaben erhalten, solange die Seite nicht neu geladen wird. Das Tag verhält sich also so, als ob immer alle Textzeugen zur gleichen Zeit eingegeben und abgespeichert werden.<br/>
+                <br/> <b>wit:</b> Textzeuge (Inv.nr. o.ä.)<br/> <b>rdg:</b> Lesart im Textzeugen</p>
+        </div>
+        <input type="checkbox" id="highlighting"/>
+        <label for="highlighting">
+            <iron-icon icon="image:wb-sunny"/>
+            <span>  Schriftart</span>
+        </label>
+        <div class="panel">
+            <p>Hervorhebung der Schriftart. Hier kann die Hervorhebung des Fonts noch einmal korrigiert werden. Auch kann eine nicht hier stehende Hervorhebung eingefügt werden.</p>
+        </div>
+        <input type="checkbox" id="italic"/>
+        <label for="italic">
+            <iron-icon icon="editor:format-italic"/>
+            <span>  Latintype / Kursiv</span>
+        </label>
+        <div class="panel">
+            <p>Latintype / Kursiv - Text wird kursiv angezeigt. Hierbei wird das "hi"-Tag verwendet, welches unter dem Tag "Schriftart" (s.o.) geändert werden kann.</p>
+        </div>
+         <input type="checkbox" id="semibold"/>
+        <label for="semibold">
+            <iron-icon icon="editor:format-bold"/>
+            <span>  Halbfett</span>
+        </label>
+        <div class="panel">
+            <p>Halbfett - Text wird halb-fett angezeigt (von Schriftart des Browsers abhängig). Hierbei wird das "hi"-Tag verwendet, welches unter dem Tag "Schriftart" (s.o.) geändert werden kann.</p>
+        </div>
+        <input type="checkbox" id="underline"/>
+        <label for="underline">
+            <iron-icon icon="editor:format-underlined"/>
+            <span>  Unterstrichen</span>
+        </label>
+        <div class="panel">
+            <p>Unterstrichen - Text wird unterstrichen angezeigt. Hierbei wird das "hi"-Tag verwendet, welches unter dem Tag "Schriftart" (s.o.) geändert werden kann.</p>
+        </div>
+        <input type="checkbox" id="superscript"/>
+        <label for="superscript">
+            <iron-icon icon="maps:terrain"/>
+            <span>  Hochgestellt</span>
+        </label>
+        <div class="panel">
+            <p>Hochgestellt - Text wird hochgestellt angezeigt. Hierbei wird das "hi"-Tag verwendet, welches unter dem Tag "Schriftart" (s.o.) geändert werden kann.</p>
+        </div>
+        <input type="checkbox" id="emphasize"/>
+        <label for="emphasize">
+            <iron-icon icon="icons:view-week"/>
+            <span>  Gesperrt</span>
+        </label>
+        <div class="panel">
+            <p>Gesperrt - Text wird gesperrt angezeigt. Hierbei wird das "hi"-Tag verwendet, welches unter dem Tag "Schriftart" (s.o.) geändert werden kann.</p>
+        </div>
+        <input type="checkbox" id="term"/>
+        <label for="term">
+            <iron-icon icon="icons:bookmark"/>
+            <span>  Fachwort</span>
+        </label>
+        <div class="panel">
+            <p>Fachwort - Dies sollte in Kombination mit einer Glosse annotiert werden. Hierbei ist die "xml:id" das verbindende Glied zwischen Fachwort und Glosse ("target").<br/><br/><b>xml:id:</b> Frei wählbare, jedoch eindeutige Id, auf die sich die Glosse beziehen kann. Hierbei ist die genaue Id in das "target" Attribut der Glosse einzutragen, damit ein Bezug hergestellt werden kann. <br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
+        </div>
+        <input type="checkbox" id="gloss"/>
+        <label for="gloss">
+            <iron-icon icon="icons:class"/>
+            <span>  Glosse</span>
+        </label>
+        <div class="panel">
+            <p>Glosse. Diese muß in Kombination mit dem Bezugswort, welches als "Term" annotiert wird, stehen. Hierbei ist das Attribut "target" das verbindende Element zwischen Glosse und Fachwort. <br/><br/><b>target:</b>Id des Fachwortes, auf die sich die Glosse bezieht. Hierbei ist die genaue Id in das "target" Attribut der Glosse einzutragen, damit ein Bezug hergestellt werden kann. <br/><br/><b>type:</b> Hier sollte eine Positionsangabe stehen, wo die Glosse sich auf dem Dokument befindet. Mögliche Werte: margin-left, margin-right, top, bottom <br/><br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
+        </div>
+        <input type="checkbox" id="note"/>
+        <label for="note">
+            <iron-icon icon="icons:note-add"/>
+            <span>  Fußnote</span>
+        </label>
+        <div class="panel">
+            <p>Fußnote - Eintrag eines Kommentars ist hier möglich. Dieser wird beim Klicken auf das Anker-Symbol als Endnote in den Text gesetzt und separat in der Publikationsansicht angezeigt. <br/><br/><b>Korrektur:</b>Sollte die Fußnote korrigiert werden müssen, geschieht dies über das Korrektur-Tag (Edit-Tag, s.u.). <br/><br/><b>Entfernung:</b> Sollte die Fußnote entfernt werden müssen, so wird zunächst der Anker entfernt, über das Edit-Tag der Text, dann erst das Note-Tag.</p>
+        </div>
+        <input type="checkbox" id="del"/>
+        <label for="del">
+            <iron-icon icon="editor:format-strikethrough"/>
+            <span>  Streichung durch den Autor</span>
+        </label>
+        <div class="panel">
+            <p>Durchstreichung durch den Original-Autor. Wird normalerweise schon in Transkribus erledigt.</p>
+        </div>
+        <input type="checkbox" id="referringString"/>
+        <label for="referringString">
+            <iron-icon icon="icons:redo"/>
+            <span>  Indirekte Erwähnung</span>
+        </label>
+        <div class="panel">
+            <p>Indirekte Erwähnung - Falls hier Bezug auf eine bekannte Person / einen bekannten Ort etc. genommen wird, die nicht namentlich genannt wird, kann hier diese mit ihrer Id annotiert werden. <br/>
+                <br/> <b>Typ:</b> z.B.: person, place, org. <br/> <b>Key:</b> Id zu Person, Ort, Organisation, etc. <br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
+        </div>
+        <input type="checkbox" id="addition"/>
+        <label for="addition">
+            <iron-icon icon="icons:add-circle"/>
+            <span>  Originale Ergänzung</span>
+        </label>
+        <div class="panel">
+            <p>Originale Ergänzung - Eine originale Ergänzung im Dokument (keine Ergänzung durch einen Editor, etc.). <br/>
+                <br/>
+                <b>hand:</b> "Autor" oder Name des Ergänzenden <br/> <b>type:</b> "correction", falls die Ergänzung auf eine Durchstreichung folgt. Ansonsten sind auch andere Typen möglich. <br/> <b>place</b>: margin-left, margin-right, below, bottom, above, top möglich. <br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke! </p>
+        </div>
+        <input type="checkbox" id="supplied"/>
+        <label for="supplied">
+            <iron-icon icon="icons:add-circle-outline"/>
+            <span>  Moderne Ergänzung</span>
+        </label>
+        <div class="panel">
+            <p>Moderne Ergänzung durch einen Editor etc. <br/>
+                <br/>
+                <b>supplied:</b> Wort, welches ergänzt wurde, weil es beispielsweise fehlte. Korrigiert wird es über das Korrektur-Tag (Edit-Tag, s.u.). <br/><br/> <b>reason:</b> Grund der modernen Ergänzung</p>
+        </div>
+        <input type="checkbox" id="number"/>
+        <label for="number">
+            <iron-icon icon="image:looks-3"/>
+            <span>  Nummer / Zahl</span>
+        </label>
+        <div class="panel">
+            <p>Ziffer, hier: im Original vorhandene Seitenzahl. Die eigentliche Zahl kann hier auch mit verschachtelter "note" als Anmerkung eingetragen werden.</p>
+        </div>
+        <input type="checkbox" id="segment"/>
+        <label for="segment">
+            <iron-icon icon="icons:explore"/>
+            <span>  Dummy-Tag</span>
+        </label>
+        <div class="panel">
+            <p>Dieses Element kann für unsicheres Tagging eingesetzt werden, wenn es später durch einen anderen Tag ausgetauscht werden soll. Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="modify"/>
+        <label for="modify">
+            <iron-icon icon="editor:mode-edit"/>
+            <span>  Korrektur</span>
+        </label>
+        <div class="panel">
+            <p>Korrektur einer Lesung, die womöglich in Transkribus übersehen wurde und daher nicht erfolgt ist. Bitte mitteilen, damit das Dokument bei Transkribus nochmal hochgeladen werden kann, falls es als Ground Truth fungieren soll.</p>
+        </div>
+    </body>
+</html>

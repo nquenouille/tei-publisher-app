@@ -63,13 +63,6 @@
         </model>
                     <model behaviour="inline" cssClass="annotation annotation-place authority"/>
                 </elementSpec>
-                <elementSpec ident="term" mode="add">
-                    <model behaviour="inline" cssClass="annotation annotation-term authority">
-            <outputRendition xml:space="preserve">
-            font-style: italic;
-            </outputRendition>
-        </model>
-                </elementSpec>
                 <elementSpec ident="date" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-date"/>
                 </elementSpec>
@@ -226,6 +219,12 @@
                 </elementSpec>
                 <elementSpec ident="seg" mode="change">
                     <model behaviour="inline" predicate="@type='todo'" cssClass="annotation annotation-seg"/>
+                </elementSpec>
+                <elementSpec ident="term" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-term" />
+                </elementSpec>
+                <elementSpec ident="gloss" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-gloss" />
                 </elementSpec>
             </schemaSpec>
         </body>
