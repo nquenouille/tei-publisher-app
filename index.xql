@@ -81,6 +81,22 @@ declare function idx:get-metadata($root as element(), $field as xs:string) {
                 head(
                     $header//tei:revisionDesc/@status
                 )
+            case "id" return
+                (
+                    $header//tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:idno
+                )
+            case "oldid" return
+                (
+                    $header//tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:altIdentifier/tei:idno
+                )
+            case "repository" return
+                (
+                    $header//tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:repository
+                )
+            case "oldrepository" return
+                (
+                    $header//tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:altIdentifier/tei:repository
+                )
             (: END of FPB changes :)
             default return
                 ()

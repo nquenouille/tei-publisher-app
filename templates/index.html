@@ -92,6 +92,18 @@
                                                     <paper-item value="author"><pb-i18n key="browse.author"></pb-i18n></paper-item>
                                                 </pb-select>
                                                 <pb-select label="search.scope" name="field" value="${field}" data-template="pages:parse-params">
+                                                    <paper-item value="id">
+                                                        <pb-i18n key="search.id" />
+                                                    </paper-item>
+                                                    <paper-item value="oldid">
+                                                        <pb-i18n key="search.oldid" />
+                                                    </paper-item>
+                                                    <paper-item value="repository">
+                                                        <pb-i18n key="search.repository" />
+                                                    </paper-item>
+                                                    <paper-item value="oldrepository">
+                                                        <pb-i18n key="search.oldrepository" />
+                                                    </paper-item>
                                                     <paper-item value="text"><pb-i18n key="search.content"></pb-i18n></paper-item>
                                                     <paper-item value="title"><pb-i18n key="search.title"></pb-i18n></paper-item>
                                                 </pb-select>
