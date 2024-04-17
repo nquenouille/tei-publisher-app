@@ -53,14 +53,16 @@
                             ePUB
                         </pb-download>
                     </paper-item>
+                    <pb-restricted login="login" group="dba">
                     <paper-item>
                         <pb-edit-xml src="document1" data-i18n="[title]menu.download.view-tei" title="view-tei">
                             XML
                         </pb-edit-xml>
                     </paper-item>
+                    </pb-restricted>
                 </paper-listbox>
             </pb-collapse>
-            <pb-restricted login="login">
+            <pb-restricted login="login" group="dba">
                 <pb-collapse>
                     <h3 slot="collapse-trigger"><pb-i18n key="menu.admin.title">Admin</pb-i18n></h3>
                     <paper-listbox slot="collapse-content">

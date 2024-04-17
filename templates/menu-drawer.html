@@ -50,14 +50,16 @@
                         ePUB
                     </pb-download>
                 </paper-item>
+                <pb-restricted login="login" group="dba">
                 <paper-item>
                     <pb-edit-xml src="document1" data-i18n="[title]menu.download.view-tei" title="view-tei">
                         XML
                     </pb-edit-xml>
                 </paper-item>
+                </pb-restricted>
             </paper-listbox>
         </paper-menu-button>
-        <pb-restricted login="login">
+        <pb-restricted login="login" grou="dba">
             <paper-menu-button>
                 <a slot="dropdown-trigger"><pb-i18n key="menu.admin.title">Admin</pb-i18n></a>
                 <paper-listbox slot="dropdown-content">

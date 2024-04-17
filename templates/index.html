@@ -123,18 +123,20 @@
                             </div>
                         </paper-card>
                         <aside>
-                            <pb-restricted login="login" can-write="can-write">
+                            <pb-restricted login="login" group="dba" can-write="can-write">
                                 <paper-card class="upload" data-i18n="[heading]upload.upload" heading="Upload">
                                     <div class="card-content">
                                         <pb-upload id="upload" emit="search" subscribe="search" accept=".xml, .tei, .odd, .docx, .md, .mei" event="pb-search-resubmit"></pb-upload>
                                     </div>
                                 </paper-card>
                             </pb-restricted>
+                            <pb-restricted login="login" group="dba">
                             <paper-card data-i18n="[heading]odd.files" class="odds" heading="ODD Files">
                                 <div class="card-content">
                                     <pb-manage-odds id="manage-odds" target="document-list" emit="search"></pb-manage-odds>
                                 </div>
                             </paper-card>
+                            </pb-restricted>
                         </aside>
                     </section>
             </main>
