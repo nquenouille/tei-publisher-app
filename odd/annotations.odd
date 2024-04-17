@@ -4,7 +4,8 @@
         <fileDesc>
             <titleStmt>
                 <title>Annotations
-                <desc>ODD used by the web-based annotation editor. Contains special rules to mark entities with the correct CSS classes</desc></title>
+                    <desc>ODD used by the web-based annotation editor. Contains special rules to mark entities with the correct CSS classes</desc>
+                </title>
             </titleStmt>
             <publicationStmt>
                 <publisher>eXistSolutions GmbH</publisher>
@@ -63,11 +64,15 @@
         </model>
                     <model behaviour="inline" cssClass="annotation annotation-place authority"/>
                 </elementSpec>
-                <elementSpec ident="date" mode="change">
-                    <model behaviour="inline" cssClass="annotation annotation-date"/>
-                </elementSpec>
+<!--                <elementSpec ident="term" mode="add">-->
+<!--                    <model behaviour="inline" cssClass="annotation annotation-term authority">-->
+<!--            <outputRendition xml:space="preserve">-->
+<!--            font-style: italic;-->
+<!--            </outputRendition>-->
+<!--        </model>-->
+<!--                </elementSpec>-->
                 <elementSpec ident="note" mode="change">
-                    <model predicate="@type='annotation'" behaviour="omit"/>
+                    <model behaviour="inline" cssClass="annotation annotation-note"/>
                     <model behaviour="note">
             <param name="place" value="@place"/>
             <param name="label" value="@n"/>
@@ -93,10 +98,6 @@
                 <param name="content" value="note/node()"/>
             </model>
         </modelSequence>
-                </elementSpec>
-                <elementSpec ident="rs" mode="change">
-                    <model predicate="@type='abbreviation'" behaviour="inline" cssClass="annotation annotation-abbreviation"/>
-                    <model behaviour="inline"/>
                 </elementSpec>
                 <elementSpec ident="person" mode="add">
                     <modelSequence>
@@ -169,11 +170,8 @@
                 <elementSpec ident="closer" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-closer"/>
                 </elementSpec>
-                <elementSpec ident="date" mode="change">
+                 <elementSpec ident="date" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-date"/>
-                </elementSpec>
-                <elementSpec ident="note" mode="change">
-                    <model behaviour="inline" cssClass="annotation annotation-note"/>
                 </elementSpec>
                 <elementSpec ident="handShift" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-handShift"/>
@@ -182,10 +180,8 @@
                     <model behaviour="inline" cssClass="annotation annotation-del" useSourceRendition="true"/>
                 </elementSpec>
                 <elementSpec ident="rs" mode="change">
+                    <model predicate="@type='abbreviation'" behaviour="inline" cssClass="annotation annotation-abbreviation"/>
                     <model behaviour="inline" cssClass="annotation annotation-rs" useSourceRendition="true"/>
-                </elementSpec>
-                <elementSpec ident="add" mode="change">
-                    <model behaviour="inline" cssClass="annotation annotation-add" useSourceRendition="true"/>
                 </elementSpec>
                 <elementSpec ident="add" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-add" useSourceRendition="true"/>
@@ -213,6 +209,7 @@
                 </elementSpec>
                 <elementSpec ident="floatingText" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-floatingText" />
+                    <model behaviour="inline"/>
                 </elementSpec>
                 <elementSpec ident="p" mode="change">
                     <model predicate="ancestor::floatingText" behaviour="inline" cssClass="annotation annotation-floatingText" />
@@ -223,8 +220,15 @@
                 <elementSpec ident="term" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-term" />
                 </elementSpec>
+                <elementSpec ident="anchor" mode="change">
+                    <model behaviour="inline" cssClass="annotation annotation-anchor"/>
+                </elementSpec>
                 <elementSpec ident="gloss" mode="change">
                     <model behaviour="inline" cssClass="annotation annotation-gloss" />
+                </elementSpec>
+                <elementSpec ident="ab" mode="change">
+                    <model predicate="@rend='indent'" behaviour="inline" cssClass="annotation annotation-ab"/>
+                    <model behaviour="inline"/>
                 </elementSpec>
             </schemaSpec>
         </body>

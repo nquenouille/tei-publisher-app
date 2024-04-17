@@ -64,6 +64,10 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             $properties?content
         
         (: FPB Addendum :)
+        case "ab" return
+            (<ab xmlns="http://www.tei-c.org/ns/1.0" rend='indent' />, $content())
+        case "add" return
+            <add xmlns="http://www.tei-c.org/ns/1.0" hand="{$properties?hand}" type="{$properties?type}" place="{$properties?place}">{$content()}</add>
         case "address" return
             <address xmlns="http://www.tei-c.org/ns/1.0"><addrLine xmlns="http://www.tei-c.org/ns/1.0">{$content()}</addrLine></address>
         case "closer" return
@@ -134,16 +138,12 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             <seg xmlns="http://www.tei-c.org/ns/1.0" type="todo">{$content()}</seg>
         case "signed" return
             <signed xmlns="http://www.tei-c.org/ns/1.0">{$content()}</signed> 
-        case "add" return
-            <add xmlns="http://www.tei-c.org/ns/1.0" hand="{$properties?hand}" type="{$properties?type}" place="{$properties?place}">{$content()}</add>
         case "supplied" return
             ($content(), <supplied xmlns="http://www.tei-c.org/ns/1.0" reason="{$properties?reason}">{$properties?supplied}</supplied>)
         case "term" return
             <term xmlns="http://www.tei-c.org/ns/1.0" xml:id="{$properties?xmlid}">{$content()}</term>
-        
         default return
-            $content()
-        
+            $content()        
 };
 
 (:~
