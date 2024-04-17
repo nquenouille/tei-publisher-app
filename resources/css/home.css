@@ -66,15 +66,8 @@ li.document{
 }
 
 .document-info{
-    min-width:min(28em,100%);    
-}
-
-a ~ .document-info {
     width:70%;
-}
-
-.documents .sample-description {
-    font-size: var(--pb-footnote-font-size);
+    min-width:min(28em,100%);    
 }
 
 pb-collapse > div{
