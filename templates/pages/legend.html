@@ -46,6 +46,38 @@
     </custom-style>
     </head>
     <body>
+        <h3>Struktur für Briefe</h3>
+        <input type="checkbox" id="letter"/>
+        <label for="letter">
+            <iron-icon icon="icons:mail"/>
+            <span>  Struktur für Briefe - Beispiel</span>
+        </label>
+        <div class="panel">
+              <p>&lt;head&gt;Überschrift (falls vorhanden)&lt;/head&gt;<br/>
+                <br/>
+              &lt;opener&gt;<br/>
+                &lt;dateline&gt;<br/>
+                        &lt;placeName&gt;Ort&lt;/placeName&gt; <br/>
+                        &lt;date&gt;Datum&lt;lb/&gt;46&lt;/date&gt;<br/>
+                  &lt;/dateline&gt;<br/>
+                &lt;salute&gt;Begrüßung&lt;/salute&gt;<br/>
+              &lt;/opener&gt;<br/>
+                <br/>
+              &lt;p&gt;Text&lt;/p&gt;<br/>
+                <br/>
+              &lt;closer&gt;<br/>
+                &lt;salute&gt;Schlußgruß&lt;/salute&gt;<br/>
+                &lt;signed&gt;Unterschrift&lt;/signed&gt;<br/>
+                &lt;dateline&gt;<br/>
+                    &lt;placeName&gt;Ort&lt;/placeName&gt; <br/>
+                    &lt;date&gt;Datum&lt;lb/&gt;46&lt;/date&gt;<br/>
+              &lt;/dateline&gt;<br/>
+                &lt;address&gt;<br/>
+                    &lt;addrLine&gt;Adresse (falls vorhanden)&lt;/addrLine&gt;<br/>
+                &lt;/address&gt;<br/>
+              &lt;/closer&gt;
+            </p>
+        </div>
         <h3>Layout - Strukturelle Tags</h3>
         <input type="checkbox" id="handshift"/>
         <label for="handshift">
@@ -72,7 +104,7 @@
             <span>  Adresse</span>
         </label>
         <div class="panel">
-            <p>Adresse <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+            <p>Adresse <br/> Das Tag setzt sich hier zusammen aus: &lt;address&gt;&lt;addrLine /&gt;&lt;/address&gt;, so daß TEI konform die Adresse umschlossen wird. Diese Änderung wird nur im TEI angezeigt.</p>
         </div>
         <input type="checkbox" id="opener"/>
         <label for="opener">
@@ -80,7 +112,7 @@
             <span>  Eröffnung des Dokuments</span>
         </label>
         <div class="panel">
-            <p>Opener - Brief- oder Dokumenteröffnung. <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+            <p>Opener - Brief- oder Dokumenteröffnung. <br/> Der Opener kann eine dateline, eine Unterschrift, einen Gruß oder auch eine Adresse enthalten. Diese Änderung wird nur im TEI angezeigt.</p>
         </div>
         <input type="checkbox" id="salute"/>
         <label for="salute">
@@ -104,7 +136,7 @@
             <span>  Closer - Schlußformulierung</span>
         </label>
         <div class="panel">
-            <p>Closer - Schlußformulierung / Briefschluss <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+            <p>Closer - Schlußformulierung / Briefschluss <br/> Kann u.a. die Adresse, Unterschrift und Grußformal enthalten. Diese Änderung wird nur im TEI angezeigt.</p>
         </div>
         <input type="checkbox" id="signed"/>
         <label for="signed">
@@ -129,6 +161,14 @@
         </label>
         <div class="panel">
             <p>Der Zeilenfall wird in der Leseansicht beibehalten. <br/> <b>Nicht in eine Adresse, einen Opener oder Closer setzen.</b> <br/> Diese Änderung wird nur im TEI angezeigt.</p>
+        </div>
+        <input type="checkbox" id="ab"/>
+        <label for="ab">
+            <iron-icon icon="icons:arrow-forward"/>
+            <span>  Text-Einrückung</span>
+        </label>
+        <div class="panel">
+            <p> Anonymer Block. Hiermit wird eine Einrückung eines Textabschnitts angegeben (Attribut: rend='indent'). Dieser endet mit dem Zeilenende. Das Tag wird vor das einzurückende Wort gesetzt, welches schließlich in einer neuen Zeile eingerückt erscheint. <br/> Diese Änderung wird nur im TEI angezeigt.</p>
         </div>
         <input type="checkbox" id="pb"/>
         <label for="pb">
@@ -189,7 +229,9 @@
         </label>
         <div class="panel">
             <p>Hier können Abkürzungen markiert und aufgelöst werden. Diese werden im Allgemeinen als Mouseover dargestellt. <br/>
-                <br/> <b>Erweiterung:</b> Auflösung der Abkürzung <br/> <b>Typ:</b> Abkürzungen, die in der Lesefassung aufgelöst dargestellt werden sollen (ohne Mouseover), erhalten den "Typ" "resolve". <br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
+                <br/> <b>Erweiterung:</b> Auflösung der Abkürzung <br/> <b>Typ:</b> Abkürzungen, die in der Lesefassung aufgelöst dargestellt werden sollen (ohne Mouseover), erhalten den "Typ" "resolve". <br/>
+                <br/>
+                <b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
         </div>
         <input type="checkbox" id="sic"/>
         <label for="sic">
@@ -207,7 +249,9 @@
         <div class="panel">
             <p>Regularisierung - Mit diesem Tag werden unter anderem Wörter gekennzeichnet, die im Original vokalische u/v/w, Buchstaben mit Trema oder auch Ligaturen (z.B. æ) aufweisen und im Lesetext in moderner Form erscheinen sollen. <br/>
                 <br/>
-                <b>Regularisierung:</b> Das regularisierte Wort. <br/> <b>Typ:</b> "modern", falls in der Textfassung das Wort in Originalschreibweise übernommen werden soll, die Originalschreibweise in der Lesefassung jedoch lediglich als Mouseover erscheinen soll. Andere Regularisierungen, die nur als Mouseover angezeigt werden sollen, können ohne oder mit anderer "Type"-Angabe ausgezeichnet werden. <br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
+                <b>Regularisierung:</b> Das regularisierte Wort. <br/> <b>Typ:</b> "modern", falls in der Textfassung das Wort in Originalschreibweise übernommen werden soll, die Originalschreibweise in der Lesefassung jedoch lediglich als Mouseover erscheinen soll. Andere Regularisierungen, die nur als Mouseover angezeigt werden sollen, können ohne oder mit anderer "Type"-Angabe ausgezeichnet werden. <br/>
+                <br/>
+                <b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
         </div>
         <input type="checkbox" id="apparatus"/>
         <label for="apparatus">
@@ -272,7 +316,11 @@
             <span>  Fachwort</span>
         </label>
         <div class="panel">
-            <p>Fachwort - Dies sollte in Kombination mit einer Glosse annotiert werden. Hierbei ist die "xml:id" das verbindende Glied zwischen Fachwort und Glosse ("target").<br/><br/><b>xml:id:</b> Frei wählbare, jedoch eindeutige Id, auf die sich die Glosse beziehen kann. Hierbei ist die genaue Id in das "target" Attribut der Glosse einzutragen, damit ein Bezug hergestellt werden kann. <br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
+            <p>Fachwort - Dies sollte in Kombination mit einer Glosse annotiert werden. Hierbei ist die "xml:id" das verbindende Glied zwischen Fachwort und Glosse ("target").<br/>
+                <br/>
+                <b>xml:id:</b> Frei wählbare, jedoch eindeutige Id, auf die sich die Glosse beziehen kann. Hierbei ist die genaue Id in das "target" Attribut der Glosse einzutragen, damit ein Bezug hergestellt werden kann. <br/>
+                <br/>
+                <b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
         </div>
         <input type="checkbox" id="gloss"/>
         <label for="gloss">
@@ -280,7 +328,14 @@
             <span>  Glosse</span>
         </label>
         <div class="panel">
-            <p>Glosse. Diese muß in Kombination mit dem Bezugswort, welches als "Term" annotiert wird, stehen. Hierbei ist das Attribut "target" das verbindende Element zwischen Glosse und Fachwort. <br/><br/><b>target:</b>Id des Fachwortes, auf die sich die Glosse bezieht. Hierbei ist die genaue Id in das "target" Attribut der Glosse einzutragen, damit ein Bezug hergestellt werden kann. <br/><br/><b>type:</b> Hier sollte eine Positionsangabe stehen, wo die Glosse sich auf dem Dokument befindet. Mögliche Werte: margin-left, margin-right, top, bottom <br/><br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
+            <p>Glosse. Diese muß in Kombination mit dem Bezugswort, welches als "Term" annotiert wird, stehen. Hierbei ist das Attribut "target" das verbindende Element zwischen Glosse und Fachwort. <br/>
+                <br/>
+                <b>target:</b>Id des Fachwortes, auf die sich die Glosse bezieht. Hierbei ist die genaue Id in das "target" Attribut der Glosse einzutragen, damit ein Bezug hergestellt werden kann. <br/>
+                <br/>
+                <b>type:</b> Hier sollte eine Positionsangabe stehen, wo die Glosse sich auf dem Dokument befindet. Mögliche Werte: margin-left, margin-right, top, bottom <br/>
+                <br/>
+                <br/>
+                <b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
         </div>
         <input type="checkbox" id="note"/>
         <label for="note">
@@ -288,7 +343,11 @@
             <span>  Fußnote</span>
         </label>
         <div class="panel">
-            <p>Fußnote - Eintrag eines Kommentars ist hier möglich. Dieser wird beim Klicken auf das Anker-Symbol als Endnote in den Text gesetzt und separat in der Publikationsansicht angezeigt. <br/><br/><b>Korrektur:</b>Sollte die Fußnote korrigiert werden müssen, geschieht dies über das Korrektur-Tag (Edit-Tag, s.u.). <br/><br/><b>Entfernung:</b> Sollte die Fußnote entfernt werden müssen, so wird zunächst der Anker entfernt, über das Edit-Tag der Text, dann erst das Note-Tag.</p>
+            <p>Fußnote - Eintrag eines Kommentars ist hier möglich. Dieser wird beim Klicken auf das Anker-Symbol als Endnote in den Text gesetzt und separat in der Publikationsansicht angezeigt. <br/>
+                <br/>
+                <b>Korrektur:</b>Sollte die Fußnote korrigiert werden müssen, geschieht dies über das Korrektur-Tag (Edit-Tag, s.u.). <br/>
+                <br/>
+                <b>Entfernung:</b> Sollte die Fußnote entfernt werden müssen, so wird zunächst der Anker entfernt, über das Edit-Tag der Text, dann erst das Note-Tag.</p>
         </div>
         <input type="checkbox" id="del"/>
         <label for="del">
@@ -305,7 +364,9 @@
         </label>
         <div class="panel">
             <p>Indirekte Erwähnung - Falls hier Bezug auf eine bekannte Person / einen bekannten Ort etc. genommen wird, die nicht namentlich genannt wird, kann hier diese mit ihrer Id annotiert werden. <br/>
-                <br/> <b>Typ:</b> z.B.: person, place, org. <br/> <b>Key:</b> Id zu Person, Ort, Organisation, etc. <br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
+                <br/> <b>Typ:</b> z.B.: person, place, org. <br/> <b>Key:</b> Id zu Person, Ort, Organisation, etc. <br/>
+                <br/>
+                <b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke!</p>
         </div>
         <input type="checkbox" id="addition"/>
         <label for="addition">
@@ -315,7 +376,9 @@
         <div class="panel">
             <p>Originale Ergänzung - Eine originale Ergänzung im Dokument (keine Ergänzung durch einen Editor, etc.). <br/>
                 <br/>
-                <b>hand:</b> "Autor" oder Name des Ergänzenden <br/> <b>type:</b> "correction", falls die Ergänzung auf eine Durchstreichung folgt. Ansonsten sind auch andere Typen möglich. <br/> <b>place</b>: margin-left, margin-right, below, bottom, above, top möglich. <br/><br/><b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke! </p>
+                <b>hand:</b> "Autor" oder Name des Ergänzenden <br/> <b>type:</b> "correction", falls die Ergänzung auf eine Durchstreichung folgt. Ansonsten sind auch andere Typen möglich. <br/> <b>place</b>: margin-left, margin-right, below, bottom, above, top möglich. <br/>
+                <br/>
+                <b>Caveat:</b> Wenn die Attribute des Tags modifiziert werden müssen, dann bitte das Tag löschen und neu anlegen. Danke! </p>
         </div>
         <input type="checkbox" id="supplied"/>
         <label for="supplied">
@@ -325,7 +388,8 @@
         <div class="panel">
             <p>Moderne Ergänzung durch einen Editor etc. <br/>
                 <br/>
-                <b>supplied:</b> Wort, welches ergänzt wurde, weil es beispielsweise fehlte. Korrigiert wird es über das Korrektur-Tag (Edit-Tag, s.u.). <br/><br/> <b>reason:</b> Grund der modernen Ergänzung</p>
+                <b>supplied:</b> Wort, welches ergänzt wurde, weil es beispielsweise fehlte. Korrigiert wird es über das Korrektur-Tag (Edit-Tag, s.u.). <br/>
+                <br/> <b>reason:</b> Grund der modernen Ergänzung</p>
         </div>
         <input type="checkbox" id="number"/>
         <label for="number">
