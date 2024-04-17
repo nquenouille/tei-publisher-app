@@ -451,7 +451,69 @@
 				}
 			}
 			
-		}
+		},
+		"/api/getUser": {
+			"get": {
+				"summary": "Get user",
+				"description": "Get user",
+				"operationId": "custom:getUser",
+				"tags": ["getUser"],
+                "responses": {
+					"200": {
+						"description": "User",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"userName": {
+											"type": "string"
+										},
+										"fullName": {
+											"type": "string"
+										},
+										"date": {
+											"type": "string"
+										}
+									}
+								}
+							}
+							
+						}
+					},
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json":{
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json":{
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "XQuery error",
+                        "content": {
+                            "application/json":{
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     },
     "security": [
         {

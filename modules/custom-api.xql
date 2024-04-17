@@ -1,5 +1,7 @@
 xquery version "3.1";
 
+(: @author Nadine Quenouille :)
+
 module namespace api="http://teipublisher.com/api/custom";
 
 declare namespace tei="http://www.tei-c.org/ns/1.0";
@@ -37,7 +39,7 @@ declare function api:status-metadata($request as map(*)) {
 };
 
 (:~
- : Merge and save the status passed in the request body.
+ : Merge and save the status, editor and date passed in the request body.
  :)
 declare function api:status-save($request as map(*)) {
     let $body := $request?body
@@ -46,18 +48,27 @@ declare function api:status-save($request as map(*)) {
     let $srcDoc := config:get-document($path)
     let $stat := $request?parameters?status
     let $hasAccess := sm:has-access(document-uri(root($srcDoc)), "rw-")
+    let $user := rutil:getDBUser()
     return
         if (not($hasAccess) and request:get-method() = 'PUT') then
             error($errors:FORBIDDEN, "Not allowed to write to " || $path)
         else if ($srcDoc) then
             let $doc := util:expand($srcDoc/*, 'add-exist-id=all')
             let $attr := $srcDoc//tei:teiHeader/tei:revisionDesc
+            let $attrChange := $srcDoc//tei:teiHeader/tei:revisionDesc/tei:change
             let $status := $srcDoc//tei:teiHeader/tei:revisionDesc/@status
+            let $change := $srcDoc//tei:teiHeader/tei:revisionDesc/tei:change/@who
+            let $when := $srcDoc//tei:teiHeader/tei:revisionDesc/tei:change/@when
+            let $date := format-date(current-date(), "[Y]-[M]-[D]")
+            let $europeDate := format-date(current-date(), "[D].[M].[Y]")
             let $docMerge := 
-                if (exists($attr)) then 
-                    update value $status with $stat
+                if (exists($attr)) then
+                    if($attrChange[@when = $date and @who = $user?fullName]) then
+                        update value $status with $stat
+                    else
+                        update insert (<tei:change who="{$user?fullName}" when="{$date}">Annotationen gesetzt</tei:change>) into $attr
                 else 
-                    update insert (<tei:revisionDesc status="status.new"></tei:revisionDesc>) into $srcDoc//tei:teiHeader
+                    update insert (<tei:revisionDesc status="status.new"><tei:change who="{$user?fullName}" when="{$date}">Ersterfassung von Annotationen am {$europeDate}</tei:change></tei:revisionDesc>) into $srcDoc//tei:teiHeader
 (:            let $stored :=:)
 (:                if (request:get-method() = 'PUT') then :)
 (:                    xmldb:store(util:collection-name($srcDoc), util:document-name($srcDoc), $srcDoc):)
@@ -126,8 +137,7 @@ declare function api:save-doc($request as map(*)) {
             let $filename := replace($doc, "^.*/([^/]+)$", "$1")
             let $mime := ($request?parameters?type, xmldb:get-mime-type($path))[1]
             let $src := util:expand($srcDoc/*, 'add-exist-id=all')
-            let $attr := $src//tei:teiHeader/tei:revisionDesc[@status="status.final"]
-            
+            let $attr := $src//tei:teiHeader/tei:revisionDesc[@status="status.final"]   
             let $stored := xmldb:store($storepath, $request?parameters?id || ".xml", $srcDoc, "text/xml")
             return
                 if (util:binary-doc-available($path) and $attr) then
@@ -152,8 +162,7 @@ declare function api:copy-doc($request as map(*)) {
     let $attr := $src//tei:teiHeader/tei:revisionDesc[@status="status.final"]
     return 
         if($attr) then
-            xmldb:copy-resource($sourceURI, $doc, $targetURI, $doc, $preserve)
-        
+            xmldb:copy-resource($sourceURI, $doc, $targetURI, $doc, $preserve)        
         else ()
 };
 
@@ -221,4 +230,16 @@ declare function api:setNotes($request as map(*)) {
             return map {
                     "content": $srcDoc}
         else api:transformNotes($srcDoc)
+};
+
+(: Get User and date (currently not used) :)
+declare function api:getUser($request as map(*)) {
+     let $userName := rutil:getDBUser()?name
+     let $fullName := rutil:getDBUser()?fullName
+     let $date := current-dateTime()
+     return map {
+         "userName": $userName,
+         "fullName": $fullName,
+         "date": $date
+         }
 };

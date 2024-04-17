@@ -475,7 +475,7 @@
                 </elementSpec>
                 <elementSpec ident="revisionDesc" mode="add">
                     <model output="web" behaviour="block" cssClass="revisionDesc">
-                    <param name="content" value="if(./@status = 'status.new') then 'Status: New' else if (./@status = 'status.inprogress') then 'Status: In Progress' else if (./@status = 'status.review') then 'Status: In Review' else if (./@status = 'status.final') then 'Status: Done' else 'No status' "/>
+                    <param name="content" value="if(./@status = 'status.new') then 'Status: New' else if (./@status = 'status.inprogress') then 'Status: In Progress' else if (./@status = 'status.review') then 'Status: In Review' else if (./@status = 'status.final') then 'Status: Done' else 'No status', concat(codepoints-to-string((13, 10)), 'Editor: ', ./change[@who][last()]/@who, codepoints-to-string((13, 10)), 'Last Change: ', ./change[@when][last()]/@when))"/>
                     <outputRendition xml:space="preserve">
                         color: darkgreen; 
                         font-size: 75%;
