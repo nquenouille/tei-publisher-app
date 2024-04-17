@@ -388,9 +388,9 @@ window.addEventListener("WebComponentsReady", () => {
 					/** FPB adding view for Transcription and Lesetext */
 					.then((html) => {
 						const iframe = document.getElementById("html");
-						iframe.srcdoc = html.replaceAll(/<img[^>]*>/g, "");
+						iframe.srcdoc = html.replaceAll(/<img[^>]*>/g, "").replaceAll(/<body class/g, '<body style=\"font-family:\'Open Sans\', \'Roboto\', \'Noto\', sans-serif; line-height: 1.5em;\" class');
 						const iframe2 = document.getElementById("html2");
-						iframe2.srcdoc = html.replaceAll(/<img[^>]*>/g, "").replaceAll(/<br[^>]*>/g, ' ').replaceAll(/\s\s+/g, ' ').replaceAll(/¬ /g, '');
+						iframe2.srcdoc = html.replaceAll(/<img[^>]*>/g, "").replaceAll(/<br[^>]*>/g, ' ').replaceAll(/\s\s+/g, ' ').replaceAll(/¬ /g, '').replaceAll(/<body class/g, '<body style=\"font-family:\'Open Sans\', \'Roboto\', \'Noto\', sans-serif; line-height: 1.5em;\" class');
 					})
 				
 			});
