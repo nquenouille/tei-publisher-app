@@ -48,6 +48,7 @@
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.signed" title="Signature" data-type="signed" icon="icons:gesture" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.postscript" title="PostScript" data-type="postscript" icon="icons:more-horiz" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.floatingText" title="floatingText" data-type="floatingText" icon="icons:receipt" disabled="disabled"/>
+                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.ab" title="AnonymusBlock" data-type="ab" icon="icons:arrow-forward" disabled="disabled"/>
                                 <paper-icon-button class="annotation-action" data-i18n="[title]annotations.pb" title="PageBreak" data-type="pb" icon="icons:remove" disabled="disabled"/>
                             </div>
                             <div class="toolbar" id="toolbar-content" style="display: none;">
@@ -101,7 +102,7 @@
                                         <paper-input name="notBefore" label="notBefore" type="date"/>
                                         <paper-input name="notAfter" label="notAfter" type="date"/>
                                     </div>
-                                    <div class="annotation-form hi" data-i18n="[label]annotations.num">
+                                    <div class="annotation-form hi" data-i18n="[label]annotations.hi">
                                         <p>Hervorhebung der Schriftart. Hier kann die Hervorhebung des Fonts noch einmal korrigiert werden. Auch kann eine nicht hier stehende Hervorhebung eingefügt werden.</p>
                                         <paper-input name="rend" label="rend"/>
                                     </div>
@@ -146,7 +147,11 @@
                                         <paper-input name="xmlid" label="xml:id" />
                                     </div>
                                     <div class="annotation-form gloss" data-i18n="[label]annotations.gloss">
-                                        <p>Glosse. Diese muß in Kombination mit dem Bezugswort, welches als "Term" annotiert wird, stehen. Hierbei ist das Attribut "target" das verbindende Element zwischen Glosse und Fachwort. <br/><br/><b>target:</b>Id des Fachwortes, auf die sich die Glosse bezieht. Hierbei ist die genaue Id in das "target" Attribut der Glosse einzutragen, damit ein Bezug hergestellt werden kann. <br/><br/><b>type:</b> Hier sollte eine Positionsangabe stehen, wo die Glosse sich auf dem Dokument befindet. Mögliche Werte: margin-left, margin-right, top, bottom</p>
+                                        <p>Glosse. Diese muß in Kombination mit dem Bezugswort, welches als "Term" annotiert wird, stehen. Hierbei ist das Attribut "target" das verbindende Element zwischen Glosse und Fachwort. <br/>
+                                            <br/>
+                                            <b>target:</b>Id des Fachwortes, auf die sich die Glosse bezieht. Hierbei ist die genaue Id in das "target" Attribut der Glosse einzutragen, damit ein Bezug hergestellt werden kann. <br/>
+                                            <br/>
+                                            <b>type:</b> Hier sollte eine Positionsangabe stehen, wo die Glosse sich auf dem Dokument befindet. Mögliche Werte: margin-left, margin-right, top, bottom</p>
                                         <paper-input name="target" label="Target-Id"/>
                                         <paper-input name="type" label="Typ"/>
                                     </div>
@@ -214,7 +219,7 @@
                                     </div>
                                     <div class="annotation-form closer" data-i18n="[label]annotations.closer">
                                         <p>
-                                            Closer - Schlußformulierung / Briefschluss <br/> Diese Änderung wird nur im TEI angezeigt.
+                                            Closer - Schlußformulierung / Briefschluss <br/> Der Opener kann eine dateline, eine Unterschrift, einen Gruß oder auch eine Adresse enthalten. Kann u.a. die Adresse, Unterschrift und Grußformal enthalten. Diese Änderung wird nur im TEI angezeigt.
                                         </p>
                                     </div>
                                     <div class="annotation-form salute" data-i18n="[label]annotations.salute">
@@ -255,6 +260,11 @@
                                     <div class="annotation-form del" data-i18n="[label]annotations.del">
                                         <p>
                                             Deletion - Durchstreichung durch den Original-Autor
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form ab" data-i18n="[label]annotations.ab">
+                                        <p>
+                                            Anonymer Block. Hiermit wird eine Einrückung eines Textabschnitts angegeben. Dieser endet mit dem Zeilenende. Das Tag wird vor das einzurückende Wort gesetzt, welches schließlich in einer neuen Zeile eingerückt erscheint. <br/> Diese Änderung wird nur im TEI angezeigt.
                                         </p>
                                     </div>
                                     <div class="annotation-form edit">
