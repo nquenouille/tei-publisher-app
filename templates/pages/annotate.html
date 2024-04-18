@@ -18,6 +18,21 @@
         <script type="module" src="pb-components-bundle.js" data-template="pages:load-components"/>
         <script type="text/javascript" src="resources/scripts/annotations/annotations.js"/>
         
+        <custom-style>
+            <style include="pb-common-styles">
+                .expl {
+                    line-height: 50%;
+                    font-size:10pt
+                }
+                ul {
+                  list-style: none;
+                  margin: 0;
+                }
+                li {
+                    font-size: 10pt;
+                }
+            </style>
+        </custom-style>
     </head>
 
     <body>
@@ -35,21 +50,46 @@
                         <aside class="annotation-editor">
                             <button id="toggle-toolbar" style="margin-bottom: 1em;">Switch between Layout and Content</button>
                             <div class="toolbar" id="toolbar-layout">
-                            <div style="margin-left: 1em">
-                                    <span style="font-weight: bold">Layout</span> <span style="font-size:10pt"> (immer von außen nach innen taggen, danach abspeichern)</span>
+                                <div style="margin-left: 1em">
+                                    <span style="font-weight: bold">Strukturelle Tags</span> <span style="font-size:10pt"> (immer von außen nach innen taggen, danach abspeichern)</span>
+                                    <p style="font-size:10pt">Strukturelle Reihenfolge (immer einzuhalten, sofern zutreffend!):</p>
                                 </div>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.handShift" title="handShift" data-type="handShift" icon="icons:label-outline" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.head" title="Head" data-type="head" icon="icons:face" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.address" title="Address" data-type="address" icon="icons:home" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.opener" title="Opener" data-type="opener" icon="icons:flight-takeoff" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.salute" title="Salute" data-type="salute" icon="social:mood" data-shortcut="⌘+⇧+s,ctrl+⇧+s" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.dateline" title="Dateline" data-type="dateline" icon="icons:view-day" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.closer" title="Closer" data-type="closer" icon="icons:flight-land" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.signed" title="Signature" data-type="signed" icon="icons:gesture" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.postscript" title="PostScript" data-type="postscript" icon="icons:more-horiz" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.floatingText" title="floatingText" data-type="floatingText" icon="icons:receipt" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.ab" title="AnonymusBlock" data-type="ab" icon="icons:arrow-forward" disabled="disabled"/>
-                                <paper-icon-button class="annotation-action" data-i18n="[title]annotations.pb" title="PageBreak" data-type="pb" icon="icons:remove" disabled="disabled"/>
+                                <ul>
+                                <li>
+                                        <paper-icon-button class="annotation-action" data-i18n="[title]annotations.head" title="Head" data-type="head" icon="icons:face" disabled="disabled"/>1. Überschrift</li>
+                                <li>
+                                        <paper-icon-button class="annotation-action" data-i18n="[title]annotations.opener" title="Opener" data-type="opener" icon="icons:flight-takeoff" disabled="disabled"/>2. Eröffnung, enthält:</li>
+                                <ul>
+                                <li>
+                                            <paper-icon-button class="annotation-action" data-i18n="[title]annotations.address" title="Address" data-type="address" icon="icons:home" disabled="disabled"/>
+                                        </li>
+                                <li>
+                                            <paper-icon-button class="annotation-action" data-i18n="[title]annotations.salute" title="Salute" data-type="salute" icon="social:mood" data-shortcut="⌘+⇧+s,ctrl+⇧+s" disabled="disabled"/>Gruß</li>
+                                <li>
+                                            <paper-icon-button class="annotation-action" data-i18n="[title]annotations.dateline" title="Dateline" data-type="dateline" icon="icons:view-day" disabled="disabled"/>Datumsbereich (unter inhaltl. Tags Ort und Datum präzisieren!)</li>
+                                </ul>
+                                <li>
+                                        <paper-icon-button class="annotation-action" data-i18n="[title]annotations.paragraph" title="Paragraph" data-type="paragraph" icon="icons:reorder" disabled="disabled"/>3. Paragraph = Textkörper</li>
+                                <li>
+                                        <paper-icon-button class="annotation-action" data-i18n="[title]annotations.closer" title="Closer" data-type="closer" icon="icons:flight-land" disabled="disabled"/>4. Schluß, enthält:</li>
+                                <ul>
+                                <li>
+                                            <paper-icon-button class="annotation-action" data-i18n="[title]annotations.signed" title="Signature" data-type="signed" icon="icons:gesture" disabled="disabled"/>Unterschrift</li>
+                                </ul>
+                                <li>
+                                        <paper-icon-button class="annotation-action" data-i18n="[title]annotations.postscript" title="PostScript" data-type="postscript" icon="icons:more-horiz" disabled="disabled"/>5. Postscriptum</li>
+                                </ul>
+                                <p style="font-size:10pt; margin-left:1em;">Weitere strukturelle Tags, die überall vorkommen können:</p>
+                                <ul>
+                                <li>
+                                        <paper-icon-button class="annotation-action" data-i18n="[title]annotations.floatingText" title="floatingText" data-type="floatingText" icon="icons:receipt" disabled="disabled"/>Zeilenfall beibehalten</li>
+                                <li>
+                                        <paper-icon-button class="annotation-action" data-i18n="[title]annotations.ab" title="AnonymusBlock" data-type="ab" icon="icons:arrow-forward" disabled="disabled"/>Einrückung</li>
+                                <li>
+                                        <paper-icon-button class="annotation-action" data-i18n="[title]annotations.pb" title="PageBreak" data-type="pb" icon="icons:remove" disabled="disabled"/>Korrektur der Seitennummer</li>
+                                <li>
+                                        <paper-icon-button class="annotation-action" data-i18n="[title]annotations.handShift" title="handShift" data-type="handShift" icon="icons:label-outline" disabled="disabled"/>Schreiberwechsel</li>
+                                </ul>
                             </div>
                             <div class="toolbar" id="toolbar-content" style="display: none;">
                             <div style="margin-left: 1em">
@@ -250,6 +290,11 @@
                                     <div class="annotation-form floatingText" data-i18n="[label]annotations.floatingText">
                                         <p>
                                             Der Zeilenfall wird in der Leseansicht beibehalten. <b>Nicht in eine Adresse, einen Opener oder Closer setzen.</b> <br/> Diese Änderung wird nur im TEI angezeigt.
+                                        </p>
+                                    </div>
+                                    <div class="annotation-form paragraph" data-i18n="[label]annotations.paragraph">
+                                        <p>
+                                            Textkörper (&lt;p&gt;-Tag)
                                         </p>
                                     </div>
                                     <div class="annotation-form seg" data-i18n="[label]annotations.seg">

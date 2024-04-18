@@ -73,3 +73,5 @@
 .view1-content-name .annotation.annotation-floatingText::after {display:none !important}
 .view1-content-line .annotation-seg {display:none !important}
 .view1-content-name .annotation.annotation-seg::after {display:none !important}
+.view1-content-line .annotation-paragraph {display:none !important}
+.view1-content-name .annotation.annotation-paragraph::after {display:none !important}

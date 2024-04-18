@@ -119,6 +119,8 @@ declare function anno:annotations($type as xs:string, $properties as map(*)?, $c
             <num xmlns="http://www.tei-c.org/ns/1.0">{$content()}<note xmlns="http://www.tei-c.org/ns/1.0">{$properties?note}</note></num>
         case "opener" return
             <opener xmlns="http://www.tei-c.org/ns/1.0">{$content()}</opener>
+        case "paragraph" return
+            <p xmlns="http://www.tei-c.org/ns/1.0">{$content()}</p>
         case "postscript" return
             <postscript xmlns="http://www.tei-c.org/ns/1.0"><p xmlns="http://www.tei-c.org/ns/1.0">{$content()}</p></postscript>
         case "ref" return

@@ -213,6 +213,7 @@
                 </elementSpec>
                 <elementSpec ident="p" mode="change">
                     <model predicate="ancestor::floatingText" behaviour="inline" cssClass="annotation annotation-floatingText" />
+                    <model behaviour="inline" cssClass="annotation annotation-paragraph"/>
                 </elementSpec>
                 <elementSpec ident="seg" mode="change">
                     <model behaviour="inline" predicate="@type='todo'" cssClass="annotation annotation-seg"/>
