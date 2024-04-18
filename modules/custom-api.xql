@@ -59,7 +59,7 @@ declare function api:status-save($request as map(*)) {
             let $status := $srcDoc//tei:teiHeader/tei:revisionDesc/@status
             let $change := $srcDoc//tei:teiHeader/tei:revisionDesc/tei:change/@who
             let $when := $srcDoc//tei:teiHeader/tei:revisionDesc/tei:change/@when
-            let $date := format-date(current-date(), "[Y]-[M]-[D]")
+            let $date := format-date(current-date(), "[Y0001]-[M01]-[D01]")
             let $europeDate := format-date(current-date(), "[D].[M].[Y]")
             let $docMerge := 
                 if (exists($attr)) then
@@ -198,7 +198,7 @@ declare function api:setNotes($request as map(*)) {
     let $doc := xmldb:decode($request?parameters?path)
     let $srcDoc := config:get-document($doc)
     let $src := util:expand($srcDoc/*, 'add-exist-id=all')
-    let $notes := $srcDoc//*/tei:text/tei:body/tei:div[@type='original']//*/tei:note
+    let $notes := $srcDoc//*/tei:text/tei:body/tei:div1[@type='original']//*/tei:note
     let $hasAccess := sm:has-access(document-uri(root($srcDoc)), "rw-")
     return
         if (not($hasAccess) and request:get-method() = 'PUT') then
@@ -211,21 +211,21 @@ declare function api:setNotes($request as map(*)) {
             let $targetNotes := update value $note/@target with (concat('#n-', $note/@n))
             let $notenumber := $note/@n
             let $notetext := 
-                if ($srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n = $notenumber]) then 
-                        update insert $note preceding $srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n= $notenumber]
+                if ($srcDoc//tei:text/tei:body/tei:div1[@type='commentary']/tei:p/tei:note[@n = $notenumber]) then 
+                        update insert $note preceding $srcDoc//tei:text/tei:body/tei:div1[@type='commentary']/tei:p/tei:note[@n= $notenumber]
                     else if
-                        ($srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n = $notenumber -1]) then 
-                        update insert $note following $srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n= ($notenumber -1)] 
+                        ($srcDoc//tei:text/tei:body/tei:div1[@type='commentary']/tei:p/tei:note[@n = $notenumber -1]) then 
+                        update insert $note following $srcDoc//tei:text/tei:body/tei:div1[@type='commentary']/tei:p/tei:note[@n= ($notenumber -1)] 
                     else if 
-                        ($srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n = max($notenumber)]) then 
-                        update insert $note following $srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n= max($notenumber)] 
+                        ($srcDoc//tei:text/tei:body/tei:div1[@type='commentary']/tei:p/tei:note[@n = max($notenumber)]) then 
+                        update insert $note following $srcDoc//tei:text/tei:body/tei:div1[@type='commentary']/tei:p/tei:note[@n= max($notenumber)] 
                     else if
-                        ($srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n = $notenumber +1]) then 
-                        update insert $note preceding $srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p/tei:note[@n= $notenumber +1]
+                        ($srcDoc//tei:text/tei:body/tei:div1[@type='commentary']/tei:p/tei:note[@n = $notenumber +1]) then 
+                        update insert $note preceding $srcDoc//tei:text/tei:body/tei:div1[@type='commentary']/tei:p/tei:note[@n= $notenumber +1]
                     else 
-                        update insert $note into $srcDoc//tei:text/tei:body/tei:div[@type='commentary']/tei:p
-            let $delNotes := update delete $srcDoc//tei:text/tei:body/tei:div[@type='original']//*/$note
-            let $newNotes := $srcDoc//*/tei:text/tei:body/tei:div[@type='commentary']/p/*
+                        update insert $note into $srcDoc//tei:text/tei:body/tei:div1[@type='commentary']/tei:p
+            let $delNotes := update delete $srcDoc//tei:text/tei:body/tei:div1[@type='original']//*/$note
+            let $newNotes := $srcDoc//*/tei:text/tei:body/tei:div1[@type='commentary']/p/*
             let $countNewNotes := if ($newNotes) then api:transformNotes($newNotes) else ()
             return map {
                     "content": $srcDoc}
