@@ -513,7 +513,93 @@
                     }
                 }
             }
-        }
+        },
+		"/api/tags/{id}": {
+			"get": {
+				"summary": "Gets the finished document and save it into edition's app",
+				"description": "Get the source of a document, either as XML, text or binary and save it into edition's app.",
+				"tags": ["finished-documents"],
+				"operationId": "custom:setTags",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Content of the document",
+						"content": {
+							"application/xml": {
+								"schema": {
+									"type": "string"
+								}
+							},
+							"text/markdown": {
+								"schema": {
+									"type": "string"
+								}
+							},
+							"text/text": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"410": {
+						"description": "Document deleted"
+					}
+				}
+			}
+		},
+		"/api/validation/{id}": {
+			"get": {
+				"summary": "Check if document is valid XML",
+				"description": "Check if document is valid XML.",
+				"tags": ["finished-documents"],
+				"operationId": "custom:validate",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Content of the document",
+						"content": {
+							"application/xml": {
+								"schema": {
+									"type": "string"
+								}
+							},
+							"text/markdown": {
+								"schema": {
+									"type": "string"
+								}
+							},
+							"text/text": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"410": {
+						"description": "Document deleted"
+					}
+				}
+			}
+		}
     },
     "security": [
         {

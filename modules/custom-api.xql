@@ -150,20 +150,31 @@ declare function api:save-doc($request as map(*)) {
             error($errors:BAD_REQUEST, "No document specified")
 };
 
-(:  Copies document from annotate collection to BachLetters collection. CAVEAT: If name of the edition's app changes, change it here, too! :)
+(:  Transform document to valid TEI, check, if document is valid and copies document from annotate collection to BachLetters collection. CAVEAT: If name of the edition's app changes, change it here, too! :)
 declare function api:copy-doc($request as map(*)) {
-    let $doca := xmldb:decode($request?parameters?id)
+    let $schema-uri := doc("https://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng")
+    let $path := xmldb:decode($request?parameters?id)
+    let $docx := doc(xmldb:encode-uri($config:data-root || "/" || $path))
+    let $clear := validation:clear-grammar-cache()
     let $doc := replace($request?parameters?id, "annotate/", "")
-    let $srcDoc := config:get-document($doca)
+    let $srcDoc := config:get-document($path)
     let $sourceURI := xmldb:encode-uri($config:app-root || "/data/annotate/")
     let $targetURI := xmldb:encode-uri("/db/apps/BachLetters/data/")
     let $preserve := "true"
+    let $validation := if(validation:jaxv($docx, $schema-uri) or validation:jing($docx, $schema-uri) = true()) then "valid" else "NOT VALID"
     let $src := util:expand($srcDoc/*, 'add-exist-id=all')
     let $attr := $src//tei:teiHeader/tei:revisionDesc[@status="status.final"]
+    let $post := api:setTags($request)
     return 
-        if($attr) then
-            xmldb:copy-resource($sourceURI, $doc, $targetURI, $doc, $preserve)        
-        else ()
+        if($attr and $validation="valid") then
+            ("Dokument erfolgreich kopiert nach", xmldb:copy-resource($sourceURI, $doc, $targetURI, $doc, $preserve))
+        else if ((validation:jaxv($docx, $schema-uri) or validation:jing($docx, $schema-uri) = false())) then
+            if (ends-with($schema-uri, ".xsd") and $schema-uri/xs:schema/@vc:minVersion eq "1.1") then
+                ("The document is NOT valid TEI: ", validation:jaxv-report($docx, $schema-uri))
+            else
+                ("The document is NOT valid TEI: ", codepoints-to-string(10), validation:jing-report($docx, $schema-uri))
+        else 
+            "The document's status is NOT set to 'DONE'"
 };
 
 (: Add numbers to anchors and notes as well as xml:id to anchor and target attr to note :)
@@ -242,4 +253,51 @@ declare function api:getUser($request as map(*)) {
          "fullName": $fullName,
          "date": $date
          }
+};
+
+(: Postprocesseing - If Closer or Opener  :)
+declare function api:setTags($request as map(*)){
+    let $body := $request?body
+    let $path := xmldb:decode($request?parameters?id)
+    let $srcDoc := config:get-document($path)
+    let $header := $srcDoc//tei:text/tei:body/*/tei:head
+    let $opener := $srcDoc//tei:text/tei:body/*/tei:opener
+    let $closer := $srcDoc//tei:closer
+    let $abTags := $srcDoc//*/tei:text/tei:body/tei:div[@type='original']//tei:ab
+    let $hasAccess := sm:has-access(document-uri(root($srcDoc)), "rw-")
+    
+    return
+        if (not($hasAccess) and request:get-method() = 'PUT') then
+            error($errors:FORBIDDEN, "Not allowed to write to " || $path)
+        else if ($srcDoc) then
+            if($opener or $header or $closer) then
+                (update rename $srcDoc//tei:div[@type='original'] as "tei:div1", update rename $srcDoc//tei:div[@type='commentary'] as "tei:div1", 
+                for $ab in $abTags
+                return update rename $ab as "tei:div2"
+                )
+            else 
+                (update rename $srcDoc//tei:div[@type='original'] as "tei:div1", update rename $srcDoc//tei:div[@type='commentary'] as "tei:div1", 
+                for $ab in $abTags
+                return update rename $ab as "tei:p"
+                )
+        else
+            error($errors:NOT_FOUND, "Document " || $path || " not found")
+};
+
+(:  Validation :)
+declare function api:validate($request as map(*)) {
+    let $schema-uri := doc("https://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng")
+    let $path := xmldb:decode($request?parameters?id)
+    let $doc := doc(xmldb:encode-uri($config:data-root || "/" || $path))
+    let $clear := validation:clear-grammar-cache()
+    let $report := 
+    if(validation:jaxv($doc, $schema-uri) or validation:jing($doc, $schema-uri) = true()) then
+        "VALID"
+    else
+        if (ends-with($schema-uri, ".xsd") and $schema-uri/xs:schema/@vc:minVersion eq "1.1") then
+            validation:jaxv-report($doc, $schema-uri)
+        else
+            validation:jing-report($doc, $schema-uri)
+    return
+        $report
 };
