@@ -178,6 +178,10 @@ app-drawer-layout:not([narrow]) [drawer-toggle] {
     text-decoration: none;
 }
 
+#toolbar-layout {
+    padding: 10px 10px 0px 0px;
+}
+
 [drawer-toggle] {
     padding-right: 0;
 }
