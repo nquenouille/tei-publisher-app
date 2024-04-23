@@ -265,9 +265,6 @@ declare function api:setTags($request as map(*)){
     let $body := $request?body
     let $path := xmldb:decode($request?parameters?id)
     let $srcDoc := config:get-document($path)
-    let $header := $srcDoc//tei:text/tei:body/*/tei:head
-    let $opener := $srcDoc//tei:text/tei:body/*/tei:opener
-    let $closer := $srcDoc//tei:closer
     let $abTags := $srcDoc//*/tei:text/tei:body/tei:div[@type='original']//tei:ab
     let $hasAccess := sm:has-access(document-uri(root($srcDoc)), "rw-")
     let $attr := $srcDoc//tei:teiHeader/tei:revisionDesc[@status="status.final"]
@@ -275,16 +272,9 @@ declare function api:setTags($request as map(*)){
         if (not($hasAccess) and request:get-method() = 'PUT') then
             error($errors:FORBIDDEN, "Not allowed to write to " || $path)
         else if ($srcDoc) then
-            if(($opener or $header or $closer) and $attr) then
-                (update rename $srcDoc//tei:div[@type='original'] as "tei:div1", update rename $srcDoc//tei:div[@type='commentary'] as "tei:div1", 
+            if($attr) then
                 for $ab in $abTags
-                return update rename $ab as "tei:div2"
-                )
-            else if ($attr) then
-                (update rename $srcDoc//tei:div[@type='original'] as "tei:div1", update rename $srcDoc//tei:div[@type='commentary'] as "tei:div1", 
-                for $ab in $abTags
-                return update rename $ab as "tei:p"
-                )
+                return update rename $ab as "tei:div"
             else
                 "Das Dokument ist noch in Bearbeitung."
         else
