@@ -154,27 +154,32 @@ declare function api:save-doc($request as map(*)) {
 declare function api:copy-doc($request as map(*)) {
     let $schema-uri := doc("https://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng")
     let $path := xmldb:decode($request?parameters?id)
-    let $docx := doc(xmldb:encode-uri($config:data-root || "/" || $path))
-    let $clear := validation:clear-grammar-cache()
     let $doc := replace($request?parameters?id, "annotate/", "")
+    let $docx := doc(xmldb:encode-uri($config:data-root || "/" || $path))
     let $srcDoc := config:get-document($path)
     let $sourceURI := xmldb:encode-uri($config:app-root || "/data/annotate/")
     let $targetURI := xmldb:encode-uri("/db/apps/BachLetters/data/")
     let $preserve := "true"
-    let $validation := if(validation:jaxv($docx, $schema-uri) or validation:jing($docx, $schema-uri) = true()) then "valid" else "NOT VALID"
     let $src := util:expand($srcDoc/*, 'add-exist-id=all')
     let $attr := $src//tei:teiHeader/tei:revisionDesc[@status="status.final"]
+    let $clear := validation:clear-grammar-cache()
+    let $report := validation:jing-report($docx, $schema-uri)
+    let $validation := if(validation:jaxv($docx, $schema-uri) or validation:jing($docx, $schema-uri) = true()) then "valid" else "false"
     let $post := api:setTags($request)
     return 
         if($attr and $validation="valid") then
-            ("Dokument erfolgreich kopiert nach", xmldb:copy-resource($sourceURI, $doc, $targetURI, $doc, $preserve))
-        else if ((validation:jaxv($docx, $schema-uri) or validation:jing($docx, $schema-uri) = false())) then
-            if (ends-with($schema-uri, ".xsd") and $schema-uri/xs:schema/@vc:minVersion eq "1.1") then
-                ("The document is NOT valid TEI: ", validation:jaxv-report($docx, $schema-uri))
-            else
-                ("The document is NOT valid TEI: ", codepoints-to-string(10), validation:jing-report($docx, $schema-uri))
+            ("Dokument erfolgreich kopiert nach ", xmldb:copy-resource($sourceURI, $doc, $targetURI, $doc, $preserve))
+        else if (($validation="false")) then
+                (codepoints-to-string(13), "The document is NOT valid TEI !!!", codepoints-to-string((10, 13)),
+                for $message in $report/message[@level = "Error"]
+                group by $line := $message/@line
+                order by $message/@line
+                return
+                    ("Line ",$message/@line, ", Col. ", $message/@column, ": ", 
+                        $message/text(), codepoints-to-string((10, 13))
+                    ))
         else 
-            "The document's status is NOT set to 'DONE'"
+            ("The document's status is NOT set to 'DONE' !!!")
 };
 
 (: Add numbers to anchors and notes as well as xml:id to anchor and target attr to note :)
