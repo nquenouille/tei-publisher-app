@@ -63,7 +63,7 @@
       "confirmDeletion": "Are you sure you want to delete the file?",
       "confirmDeletion_plural": "Are you sure you want to delete {{count}} files?",
       "publish": "Publish",
-      "confirmPublication": "The current version of the final document (Status: Done) is released for publication. Any older version will be overwritten. Continue?",
+      "confirmPublication": "\rAre you sure that all possible &lt;head&gt;, &lt;opener&gt; and &lt;closer&gt; tags have been set? \n\rIf so: The current version of the final document (Status: Done) is released for publication. Any older version will be overwritten. \n\n\rContinue?",
       "documents": "Documents",
       "documents-removed":"Removed documents",
       "document-not-found":"Document not found",

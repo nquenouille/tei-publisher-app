@@ -169,7 +169,7 @@ declare function api:copy-doc($request as map(*)) {
     return 
         if($attr and $validation="valid") then
             ("Dokument erfolgreich kopiert nach ", xmldb:copy-resource($sourceURI, $doc, $targetURI, $doc, $preserve))
-        else if (($validation="false")) then
+        else if (($attr and $validation="false")) then
                 (codepoints-to-string(13), "The document is NOT valid TEI !!!", codepoints-to-string((10, 13)),
                 for $message in $report/message[@level = "Error"]
                 group by $line := $message/@line
@@ -270,21 +270,23 @@ declare function api:setTags($request as map(*)){
     let $closer := $srcDoc//tei:closer
     let $abTags := $srcDoc//*/tei:text/tei:body/tei:div[@type='original']//tei:ab
     let $hasAccess := sm:has-access(document-uri(root($srcDoc)), "rw-")
-    
+    let $attr := $srcDoc//tei:teiHeader/tei:revisionDesc[@status="status.final"]
     return
         if (not($hasAccess) and request:get-method() = 'PUT') then
             error($errors:FORBIDDEN, "Not allowed to write to " || $path)
         else if ($srcDoc) then
-            if($opener or $header or $closer) then
+            if(($opener or $header or $closer) and $attr) then
                 (update rename $srcDoc//tei:div[@type='original'] as "tei:div1", update rename $srcDoc//tei:div[@type='commentary'] as "tei:div1", 
                 for $ab in $abTags
                 return update rename $ab as "tei:div2"
                 )
-            else 
+            else if ($attr) then
                 (update rename $srcDoc//tei:div[@type='original'] as "tei:div1", update rename $srcDoc//tei:div[@type='commentary'] as "tei:div1", 
                 for $ab in $abTags
                 return update rename $ab as "tei:p"
                 )
+            else
+                "Das Dokument ist noch in Bearbeitung."
         else
             error($errors:NOT_FOUND, "Document " || $path || " not found")
 };
