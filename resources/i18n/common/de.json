@@ -60,7 +60,7 @@
       "confirmDeletion": "Möchten Sie die Datei wirklich löschen?",
       "confirmDeletion_plural": "Möchten Sie wirklich {{count}} Dateien löschen?",
       "publish": "Publizieren",
-      "confirmPublication": "\rSicher, daß alle etwaigen &lt;head&gt;, &lt;opener&gt; und &lt;closer&gt; Tags gesetzt wurden? \n\rWenn ja: Es wird die aktuelle Version des fertigen Dokuments (Status: Done) zur Publikation freigegeben. Eine etwaige ältere Version wird überschrieben. \n\n\rFortfahren?",
+      "confirmPublication": "\rSicher, daß alle etwaigen &lt;head&gt;, &lt;opener&gt;, &lt;closer&gt; &lt;signed&gt; und &lt;p&gt; Tags gesetzt wurden? \n\rWenn ja: Es wird die aktuelle Version des fertigen Dokuments (Status: Done) zur Publikation freigegeben. Eine etwaige ältere Version wird überschrieben. \n\n\rFortfahren?",
       "documents": "Dokumente",
       "collections": "Lokale Sammlung",
       "dts": "Distributed Text Services (experimentell)",
