@@ -5,7 +5,8 @@ xquery version "3.1";
 module namespace api="http://teipublisher.com/api/custom";
 
 declare namespace tei="http://www.tei-c.org/ns/1.0";
-
+declare namespace vc="http://www.w3.org/2007/XMLSchema-versioning";
+import module namespace validation="http://exist-db.org/xquery/validation";
 import module namespace config="http://www.tei-c.org/tei-simple/config" at "config.xqm";
 import module namespace dapi="http://teipublisher.com/api/documents" at "lib/api/document.xql";
 import module namespace errors = "http://e-editiones.org/roaster/errors";
@@ -66,9 +67,13 @@ declare function api:status-save($request as map(*)) {
                     if($attrChange[@when = $date and @who = $user?fullName]) then
                         update value $status with $stat
                     else
-                        update insert (<tei:change who="{$user?fullName}" when="{$date}">Annotationen gesetzt</tei:change>) into $attr
+                        update insert (<change xmlns="http://www.tei-c.org/ns/1.0" who="{$user?fullName}" when="{$date}">Annotationen gesetzt</change>) into $attr
                 else 
-                    update insert (<tei:revisionDesc status="status.new"><tei:change who="{$user?fullName}" when="{$date}">Ersterfassung von Annotationen am {$europeDate}</tei:change></tei:revisionDesc>) into $srcDoc//tei:teiHeader
+                    update insert (
+                        <revisionDesc xmlns="http://www.tei-c.org/ns/1.0" status="status.new">
+                            <change xmlns="http://www.tei-c.org/ns/1.0" who="{$user?fullName}" when="{$date}">Ersterfassung von Annotationen am {$europeDate}</change>
+                        </revisionDesc>) 
+                        into $srcDoc//tei:teiHeader
 (:            let $stored :=:)
 (:                if (request:get-method() = 'PUT') then :)
 (:                    xmldb:store(util:collection-name($srcDoc), util:document-name($srcDoc), $srcDoc):)
@@ -221,7 +226,7 @@ declare function api:setNotes($request as map(*)) {
             error($errors:FORBIDDEN, "Not allowed to write to " || $doc)
         else if($srcDoc and $notes) then 
             for $note in $notes 
-            let $putAnchor := update insert <tei:anchor xml:id="" n="" /> following $note[@n=""]
+            let $putAnchor := update insert <anchor xmlns="http://www.tei-c.org/ns/1.0" xml:id="" n="" /> following $note[@n=""]
             let $numeroAnchor := api:transformNotes($srcDoc//*/tei:anchor)
             let $numeroNotes := update value $note/@n with $note/following::tei:anchor/@n
             let $targetNotes := update value $note/@target with (concat('#n-', $note/@n))
@@ -287,14 +292,17 @@ declare function api:validate($request as map(*)) {
     let $path := xmldb:decode($request?parameters?id)
     let $doc := doc(xmldb:encode-uri($config:data-root || "/" || $path))
     let $clear := validation:clear-grammar-cache()
-    let $report := 
-    if(validation:jaxv($doc, $schema-uri) or validation:jing($doc, $schema-uri) = true()) then
-        "VALID"
+    let $report := validation:jing-report($doc, $schema-uri)
+    let $result := 
+    if(validation:jing($doc, $schema-uri) = true()) then
+        "The document is VALID TEI"
     else
-        if (ends-with($schema-uri, ".xsd") and $schema-uri/xs:schema/@vc:minVersion eq "1.1") then
-            validation:jaxv-report($doc, $schema-uri)
-        else
-            validation:jing-report($doc, $schema-uri)
+        (codepoints-to-string(13), "The document is NOT valid TEI !!!", codepoints-to-string((10, 13)),
+                for $message in $report/message[@level = "Error"]
+                return
+                    ("Line ",$message/@line, ", Col. ", $message/@column, ": ", 
+                        $message/text(), codepoints-to-string((10, 13))
+                    ))
     return
-        $report
+        $result
 };
