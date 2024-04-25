@@ -279,7 +279,7 @@ declare function api:setTags($request as map(*)){
         else if ($srcDoc) then
             if($attr) then
                 for $ab in $abTags
-                return update rename $ab as "tei:div"
+                return update rename $ab as "div"
             else
                 "Das Dokument ist noch in Bearbeitung."
         else
