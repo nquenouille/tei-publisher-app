@@ -537,7 +537,7 @@ text-indent: 0%;
         </model>
                     <model predicate="not(@type='hidden')" behaviour="webcomponent" useSourceRendition="true">
             <param name="content" value="@n"/>
-            <param name="facs" value="let $path := id(substring-after(@facs, '#'), root($parameters?root)) return  $path/surface/graphic[@mimeType=&#34;image/tif&#34;]/@url"/>
+            <param name="facs" value="let $path := id(substring-after(@facs, '#'), root($parameters?root)) return  $path/surface/graphic/@url"/>
             <param name="name" value="'pb-facs-link'"/>
             <param name="emit" value="'transcription'"/>
             <param name="order" value="@n"/>

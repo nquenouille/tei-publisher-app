@@ -357,14 +357,12 @@ window.addEventListener("WebComponentsReady", () => {
                 var par = document.getElementById("facsimile");
                 if(!par.hasChildNodes("pb-facs-link")){
                     var allGraphics = Array.from(xmlDoc.getElementsByTagName("graphic")).forEach(function (e, i) {
-                        if(e){
-                        if(e.getAttribute("mimeType") == "image/tif"){
+                        if(e){                        
                             const el = document.createElement("pb-facs-link");
                             var url = e.getAttribute("url");
                             el.setAttribute("facs", url);
                             el.setAttribute("order", i);
-                            par.appendChild(el);
-                            }
+                            par.appendChild(el);                            
                         }
                     });
                 }
