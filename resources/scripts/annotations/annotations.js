@@ -358,7 +358,7 @@ window.addEventListener("WebComponentsReady", () => {
                 if(!par.hasChildNodes("pb-facs-link")){
                     var allGraphics = Array.from(xmlDoc.getElementsByTagName("graphic")).forEach(function (e, i) {
                         if(e){
-                        if(e.getAttribute("mimeType") == "image/jpg"){
+                        if(e.getAttribute("mimeType") == "image/tif"){
                             const el = document.createElement("pb-facs-link");
                             var url = e.getAttribute("url");
                             el.setAttribute("facs", url);
