@@ -392,11 +392,21 @@ window.addEventListener("WebComponentsReady", () => {
 						const iframe2 = document.getElementById("html2");
 						iframe2.srcdoc = html.replaceAll(/<img[^>]*>/g, "").replaceAll(/<br[^>]*>/g, ' ').replaceAll(/\s\s+/g, ' ').replaceAll(/¬ /g, '').replaceAll(/<body class/g, '<body style=\"font-family:\'Open Sans\', \'Roboto\', \'Noto\', sans-serif; line-height: 1.5em;\" class');
 					})
-				
-			});
-			        /** *********END of FPB change********* */
+				/* FPB Validation of the document */
+                fetch(`${endpoint}/api/validation/${doc.path}`, {
+					method: "GET",
+					mode: "cors",
+					credentials: "same-origin"
+			})
+			.then((response) => response.text())
+			
+			.then((xml) => {
+				const val = document.getElementById("validation");
+				val.textContent = xml; 
+				})
+			}); 
+				/* *********END of FPB change********* */
 		})
-		
 	}
 
 

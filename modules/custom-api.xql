@@ -300,9 +300,10 @@ declare function api:validate($request as map(*)) {
         (codepoints-to-string(13), "The document is NOT valid TEI !!!", codepoints-to-string((10, 13)),
                 for $message in $report/message[@level = "Error"]
                 return
-                    ("Line ",$message/@line, ", Col. ", $message/@column, ": ", 
+                    ("&#10; &#x2022; Line ",$message/@line, ", Col. ", $message/@column, ": ", 
                         $message/text(), codepoints-to-string((10, 13))
                     ))
     return
         $result
 };
+
